@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+    <ImageView
+            android:id="@+id/plane_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_airplanemode_on_black_48dp"/>
+
+    <TextView
+            android:id="@+id/manufacturer_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_alignTop="@id/plane_imageview"
+            android:layout_toRightOf="@id/plane_imageview"/>
+
+    <TextView
+            android:id="@+id/model_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_below="@id/manufacturer_textview"
+            android:layout_alignLeft="@id/manufacturer_textview"/>
+
+
+</RelativeLayout>
