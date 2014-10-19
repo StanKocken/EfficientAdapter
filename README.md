@@ -19,8 +19,7 @@ You create a class that will be your Controller of your view. I give you your ob
 
         @Override
         protected void updateView(Context context, Book object) {
-            TextView textView
-                        = (TextView) findViewByIdEfficient(R.id.title_textview);
+            TextView textView = (TextView) findViewByIdEfficient(R.id.title_textview);
             textView.setText(object.getTitle());
         }
     }
@@ -36,17 +35,65 @@ And that's it, you have your list of books!
 
 ## Other features
 
-- Heterogenous list (different kind of objects, layout, viewholder…)
-- Let the element be clickable
+### Heterogenous list
+For a list of different kind of objects, layout, viewholder…
+
+    HeterogeneousAdapter adapter = new HeterogeneousAdapter(generateListObjects()) {
+        @Override
+        public int getItemViewType(int position) {
+            if (get(position) instanceof Plane) {
+                return VIEW_TYPE_PLANE;
+            } else {
+                return VIEW_TYPE_BOOK;
+            }
+        }
+
+        @Override
+        protected Class<? extends AbsViewHolder> getViewHolderClass(int viewType) {
+            switch (viewType) {
+                case VIEW_TYPE_BOOK:
+                    return BookViewHolder.class;
+                case VIEW_TYPE_PLANE:
+                    return PlaneViewHolder.class;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        protected int getLayoutResId(int viewType) {
+            switch (viewType) {
+                case VIEW_TYPE_BOOK:
+                    return R.layout.item_book;
+                case VIEW_TYPE_PLANE:
+                    return R.layout.item_plane;
+                default:
+                    return 0;
+            }
+        }
+    };
+
+### Efficient findViewById()
+
+Because `findViewById(int id)` is consuming (this is why we use the ViewHolder pattern), I introduced a `findViewByIdEfficient(int id)` into the ViewHolder class.
+
+You can use it like a `findViewById(int id)` but the view return will be cached to be returned in the next call.
+
+Your view id should be unique into your view hierarchy, but sometimes is not that easy (with an include for example). It's now easier to find a subview by specify the parent of this subview with `findViewByIdEfficient(int parentId, int id)`
+
+
+### Let the element be clickable
+
+Your ViewHolder class can override the method `isClickable()` to tell is this element is clickable or not.
 
 ## License
 
-* [MIT](http://opensource.org/licenses/MIT)
+* [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Contributing
 
 Please fork this repository and contribute back using
-[pull requests](https://github.com/******/pulls).
+[pull requests](https://github.com/StanKocken/EfficientAdapter/pulls).
 
 Any contributions, large or small, major features, bug fixes, additional
 language translations, unit/integration tests are welcomed and appreciated
