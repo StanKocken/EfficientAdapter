@@ -39,6 +39,14 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
     protected abstract void updateView(Context context, T object);
 
     /**
+     * Get the last object set to this viewholder
+     * @return
+     */
+    public T getObject() {
+        return mObject;
+    }
+
+    /**
      * Get the root view for the viewholder (the one passed into the constructor)
      *
      * @return The viewholder's root view, or null if it has no layout.
