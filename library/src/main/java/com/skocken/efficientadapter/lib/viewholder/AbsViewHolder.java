@@ -101,6 +101,14 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
     }
 
     /**
+     * Determine if a long click listener should be automatically added to the view of this view holder
+     * @return true you want to have this view clickable
+     */
+    public boolean isLongClickable() {
+        return false;
+    }
+
+    /**
      * Look for a child view with the given id.  If this view has the given
      * id, return this view.
      * <p/>

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -37,6 +38,11 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      * The listener that receives notifications when an item is clicked.
      */
     private OnItemClickListener mOnItemClickListener;
+
+    /**
+     * The listener that receives notifications when an item is long clicked.
+     */
+    private OnItemLongClickListener mOnItemLongClickListener;
 
     /**
      * Constructor
@@ -74,6 +80,18 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      * @return the resource ID of a layout to inflate
      */
     protected abstract int getLayoutResId(int viewType);
+
+    /**
+     * Register a callback to be invoked when an item in this AbsViewHolderAdapter has
+     * been long-clicked.
+     *
+     * Your view holder must allow the click by overriding the method "isClickable()"
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        mOnItemLongClickListener = listener;
+    }
 
     /**
      * Register a callback to be invoked when an item in this AbsViewHolderAdapter has
@@ -167,6 +185,17 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
                 });
             } else {
                 v.setOnClickListener(null);
+            }
+            if (viewHolder.isLongClickable()) {
+                v.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        onLongClickItem(viewHolder, viewHolder.getPosition());
+                        return true;
+                    }
+                });
+            } else {
+                v.setOnLongClickListener(null);
             }
         }
         return viewHolder;
@@ -272,6 +301,14 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
         }
     }
 
+    private void onLongClickItem(AbsViewHolder viewHolder, int position) {
+        if (mOnItemLongClickListener != null) {
+            View view = viewHolder.getView();
+            T object = get(position);
+            mOnItemLongClickListener.onLongItemClick(this, view, object, position);
+        }
+    }
+
     /**
      * Interface definition for a callback to be invoked when an item in this
      * AbsViewHolderAdapter has been clicked.
@@ -292,5 +329,28 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
          * @param position The position of the view in the adapter.
          */
         void onItemClick(AbsViewHolderAdapter<?> parent, View view, Object object, int position);
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when an item in this
+     * AbsViewHolderAdapter has been long-clicked.
+     */
+    public interface OnItemLongClickListener {
+
+        /**
+         * Callback method to be invoked when an item in this AdapterView has
+         * been long-clicked.
+         * <p>
+         * Implementers can call getItemAtPosition(position) if they need
+         * to access the data associated with the selected item.
+         *
+         * @param parent   The AdapterView where the click happened.
+         * @param view     The view within the AdapterView that was clicked (this
+         *                 will be a view provided by the adapter)
+         * @param object   The object of the view.
+         * @param position The position of the view in the adapter.
+         */
+        void onLongItemClick(AbsViewHolderAdapter<?> parent, View view, Object object,
+                int position);
     }
 }
