@@ -118,8 +118,8 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
      * @param id The id to search for.
      * @return The view that has the given id in the hierarchy or null
      */
-    public View findViewByIdEfficient(int id) {
-        return findViewByIdEfficient(0, id);
+    public <T extends View> T findViewByIdEfficient(int id) {
+        return (T) findViewByIdEfficient(0, id);
     }
 
     /**
@@ -132,7 +132,7 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
      * @param id The id to search for.
      * @return The view that has the given id in the hierarchy or null
      */
-    public View findViewByIdEfficient(int parentId, int id) {
+    public <T extends View> T findViewByIdEfficient(int parentId, int id) {
         View viewRetrieve = retrieveFromCache(parentId, id);
         if (viewRetrieve == null) {
             viewRetrieve = findViewById(parentId, id);
@@ -140,7 +140,7 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
                 storeView(parentId, id, viewRetrieve);
             }
         }
-        return viewRetrieve;
+        return (T) viewRetrieve;
     }
 
     private void storeView(int parentId, int id, View viewRetrieve) {
