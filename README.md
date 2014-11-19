@@ -86,6 +86,15 @@ Your view id should be unique into your view hierarchy, but sometimes is not tha
 
 Your ViewHolder class can override the method `isClickable()` to tell is this element is clickable or not.
 
+## Proguard
+
+To be compatible with proguard you need to add this lines in your file
+
+    -keepclassmembers public class * extends com.skocken.efficientadapter.lib.viewholder.AbsViewHolder {
+        public <init>(...);
+    }
+
+
 ## License
 
 * [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
