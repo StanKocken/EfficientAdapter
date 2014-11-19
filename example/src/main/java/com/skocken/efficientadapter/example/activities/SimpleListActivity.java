@@ -34,11 +34,6 @@ public class SimpleListActivity extends Activity {
         SimpleAdapter adapter = new SimpleAdapter<Plane>(R.layout.item_plane, PlaneViewHolder.class,
                 generateListOfPlane());
 
-
-
-        SimpleAdapter adapter = new SimpleAdapter<Plane>(
-                R.layout.item_book, BookViewHolder.class,
-                listOfBooks);
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new AbsViewHolderAdapter.OnItemClickListener() {
