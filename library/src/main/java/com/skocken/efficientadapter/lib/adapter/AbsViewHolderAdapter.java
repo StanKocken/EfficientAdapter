@@ -210,6 +210,37 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     }
 
     /**
+     * Returns whether this {@code List} contains no elements.
+     *
+     * @return {@code true} if this {@code List} has no elements, {@code false}
+     *         otherwise.
+     * @see #size
+     */
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
+     * Returns the number of elements in this {@code List}.
+     *
+     * @return the number of elements in this {@code List}.
+     */
+    public int size() {
+        synchronized (mLock) {
+            return mObjects.size();
+        }
+    }
+
+    /**
+     * @return a copy of the {@code List} of elements.
+     */
+    public List<T> getObjects() {
+        synchronized (mLock) {
+            return new ArrayList<T>(mObjects);
+        }
+    }
+
+    /**
      * Get the object at the position from the array.
      *
      * @param position position of the object in this adapter
