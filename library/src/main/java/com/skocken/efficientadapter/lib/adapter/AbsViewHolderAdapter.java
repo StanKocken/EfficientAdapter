@@ -122,10 +122,12 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      * @param collection The Collection to add at the end of the array.
      */
     public void addAll(Collection<? extends T> collection) {
+        int positionOfInsert;
         synchronized (mLock) {
+            positionOfInsert = mObjects.size();
             mObjects.addAll(collection);
         }
-        notifyDataSetChanged();
+        notifyItemInserted(positionOfInsert);
     }
 
     /**
@@ -143,20 +145,68 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      * @param object The object to add at the end of the array.
      */
     public void add(T object) {
+        int positionOfInsert;
         synchronized (mLock) {
+            positionOfInsert = mObjects.size();
             mObjects.add(object);
         }
-        notifyDataSetChanged();
+        notifyItemInserted(positionOfInsert);
+    }
+
+    /**
+     * Adds the specified object at the specified position of the array.
+     *
+     * @param position The position of object to add
+     * @param object   The object to add at the end of the array.
+     */
+    public void add(int position, T object) {
+        synchronized (mLock) {
+            mObjects.add(position, object);
+        }
+        notifyItemInserted(position);
+    }
+
+
+    /**
+     * Remove the object at the specified position of the array.
+     *
+     * @param position The position of object to add
+     */
+    public void remove(int position) {
+        synchronized (mLock) {
+            mObjects.remove(position);
+        }
+        notifyItemRemoved(position);
+    }
+
+
+    /**
+     * Remove the specified object of the array.
+     *
+     * @param object   The object to add at the end of the array.
+     */
+    public void remove(T object) {
+        int positionOfRemove;
+        synchronized (mLock) {
+            positionOfRemove = mObjects.indexOf(object);
+        }
+        if (positionOfRemove >= 0) {
+            remove(positionOfRemove);
+        }
     }
 
     /**
      * Remove all elements from the list.
      */
     public void clear() {
+        int nbObjectRemoved;
         synchronized (mLock) {
+            nbObjectRemoved = mObjects.size();
             mObjects.clear();
         }
-        notifyDataSetChanged();
+        for (int i = nbObjectRemoved - 1; i >= 0; i--) {
+            notifyItemRemoved(i);
+        }
     }
 
     /**
