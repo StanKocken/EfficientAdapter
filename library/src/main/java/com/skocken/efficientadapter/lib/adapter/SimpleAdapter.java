@@ -41,7 +41,7 @@ public class SimpleAdapter<T> extends AbsViewHolderAdapter<T> {
     }
 
     @Override
-    protected Class<? extends AbsViewHolder<? extends T>> getViewHolderClass(int position) {
+    protected Class<? extends AbsViewHolder<? extends T>> getViewHolderClass(int viewType) {
         return mViewHolderClass;
     }
 
