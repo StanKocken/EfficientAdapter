@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="16sp"
+            android:textColor="@android:color/black"
             android:layout_alignTop="@id/plane_imageview"
             android:layout_toRightOf="@id/plane_imageview"/>
 
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
             android:layout_below="@id/manufacturer_textview"
             android:layout_alignLeft="@id/manufacturer_textview"/>
 
