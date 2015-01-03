@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -37,12 +36,12 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     /**
      * The listener that receives notifications when an item is clicked.
      */
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener<T> mOnItemClickListener;
 
     /**
      * The listener that receives notifications when an item is long clicked.
      */
-    private OnItemLongClickListener mOnItemLongClickListener;
+    private OnItemLongClickListener<T> mOnItemLongClickListener;
 
     /**
      * Constructor
@@ -89,7 +88,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      *
      * @param listener The callback that will be invoked.
      */
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+    public void setOnItemLongClickListener(OnItemLongClickListener<T> listener) {
         mOnItemLongClickListener = listener;
     }
 
@@ -101,7 +100,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      *
      * @param listener The callback that will be invoked.
      */
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener<T> listener) {
         mOnItemClickListener = listener;
     }
 
@@ -183,7 +182,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     /**
      * Remove the specified object of the array.
      *
-     * @param object   The object to add at the end of the array.
+     * @param object The object to add at the end of the array.
      */
     public void remove(T object) {
         int positionOfRemove;
@@ -213,7 +212,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      * Returns whether this {@code List} contains no elements.
      *
      * @return {@code true} if this {@code List} has no elements, {@code false}
-     *         otherwise.
+     * otherwise.
      * @see #size
      */
     public boolean isEmpty() {
@@ -394,7 +393,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
      * Interface definition for a callback to be invoked when an item in this
      * AbsViewHolderAdapter has been clicked.
      */
-    public interface OnItemClickListener {
+    public interface OnItemClickListener<T> {
 
         /**
          * Callback method to be invoked when an item in this AdapterView has
@@ -409,14 +408,14 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
          * @param object   The object of the view.
          * @param position The position of the view in the adapter.
          */
-        void onItemClick(AbsViewHolderAdapter<?> parent, View view, Object object, int position);
+        void onItemClick(AbsViewHolderAdapter<T> parent, View view, T object, int position);
     }
 
     /**
      * Interface definition for a callback to be invoked when an item in this
      * AbsViewHolderAdapter has been long-clicked.
      */
-    public interface OnItemLongClickListener {
+    public interface OnItemLongClickListener<T> {
 
         /**
          * Callback method to be invoked when an item in this AdapterView has
@@ -431,7 +430,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
          * @param object   The object of the view.
          * @param position The position of the view in the adapter.
          */
-        void onLongItemClick(AbsViewHolderAdapter<?> parent, View view, Object object,
+        void onLongItemClick(AbsViewHolderAdapter<T> parent, View view, T object,
                 int position);
     }
 }

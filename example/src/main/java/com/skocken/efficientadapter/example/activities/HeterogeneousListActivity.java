@@ -76,7 +76,7 @@ public class HeterogeneousListActivity extends Activity {
 
         adapter.setOnItemClickListener(new AbsViewHolderAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AbsViewHolderAdapter<?> parent, View view, Object object,
+            public void onItemClick(AbsViewHolderAdapter parent, View view, Object object,
                     int position) {
                 Toast.makeText(view.getContext(),
                         "Click on: " + object.toString(),

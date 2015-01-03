@@ -36,9 +36,9 @@ public class SimpleListActivity extends Activity {
 
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new AbsViewHolderAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new AbsViewHolderAdapter.OnItemClickListener<Plane>() {
             @Override
-            public void onItemClick(AbsViewHolderAdapter<?> parent, View view, Object object,
+            public void onItemClick(AbsViewHolderAdapter<Plane> parent, View view, Plane object,
                     int position) {
                 Toast.makeText(view.getContext(),
                         "Click on: " + object.toString(),
