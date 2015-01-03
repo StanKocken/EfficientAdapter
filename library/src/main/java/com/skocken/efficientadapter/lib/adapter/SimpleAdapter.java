@@ -46,7 +46,7 @@ public class SimpleAdapter<T> extends AbsViewHolderAdapter<T> {
     }
 
     @Override
-    protected int getLayoutResId(int position) {
+    protected int getLayoutResId(int viewType) {
         return mLayoutResId;
     }
 }
