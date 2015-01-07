@@ -23,4 +23,9 @@ public class BookViewHolder extends AbsViewHolder<Book> {
         ((TextView) findViewByIdEfficient(R.id.summary_textview)).setText(
                 object.getSummary());
     }
+
+    @Override
+    public boolean isClickable() {
+        return false;
+    }
 }

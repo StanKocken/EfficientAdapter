@@ -278,7 +278,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
         View v = generateView(parent, viewType);
         final AbsViewHolder viewHolder = generateViewHolder(v, viewType);
         if (viewHolder != null) {
-            if (viewHolder.isClickable()) {
+            if (viewHolder.isClickable() && mOnItemClickListener != null) {
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -288,7 +288,8 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
             } else {
                 v.setOnClickListener(null);
             }
-            if (viewHolder.isLongClickable()) {
+
+            if (viewHolder.isLongClickable() && mOnItemLongClickListener != null) {
                 v.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {

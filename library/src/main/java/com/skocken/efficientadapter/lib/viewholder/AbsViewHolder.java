@@ -97,7 +97,7 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
      * @return true you want to have this view clickable
      */
     public boolean isClickable() {
-        return false;
+        return true;
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
      * @return true you want to have this view clickable
      */
     public boolean isLongClickable() {
-        return false;
+        return true;
     }
 
     /**
