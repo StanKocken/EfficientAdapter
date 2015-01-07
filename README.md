@@ -86,6 +86,8 @@ Your view id should be unique into your view hierarchy, but sometimes is not tha
 
 Your ViewHolder class can override the method `isClickable()` to tell is this element is clickable or not.
 
+By default, the view is clickable if you add a listener to your adapter.
+
 ## Proguard
 
 To be compatible with proguard you need to add this lines in your file
@@ -97,7 +99,7 @@ To be compatible with proguard you need to add this lines in your file
 ## Gradle
 
     dependencies {
-        compile 'com.skocken:efficientadapter.lib:1.1.+'
+        compile 'com.skocken:efficientadapter.lib:1.2.+'
     }
 
 

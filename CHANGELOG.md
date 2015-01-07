@@ -1,6 +1,12 @@
 Change Log
 ===============================================================================
 
+Version 1.2.0 *(2015-01-07)*
+----------------------------
+
+ * Add method to prevent calling notifyItem*** (issue #9)
+ * Change the default "isClickable" method of ViewHolder to true if a listener is present
+
 Version 1.1.0 *(2015-01-03)*
 ----------------------------
 
