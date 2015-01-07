@@ -44,6 +44,11 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     private OnItemLongClickListener<T> mOnItemLongClickListener;
 
     /**
+     * Describe if we need to notify the adapter on add, addAll, remove or not.
+     */
+    private boolean mNotifyOnChange = true;
+
+    /**
      * Constructor
      *
      * @param objects The objects to represent in the RecyclerView.
@@ -105,6 +110,13 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     }
 
     /**
+     * Set if we need to notify the adapter on add, addAll or remove object or not.
+     */
+    public void setNotifyOnChange(boolean enable) {
+        mNotifyOnChange = enable;
+    }
+
+    /**
      * Determine if the object provide is in this adapter
      *
      * @return true if the object is in this adapter
@@ -126,7 +138,9 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
             positionOfInsert = mObjects.size();
             mObjects.addAll(collection);
         }
-        notifyItemInserted(positionOfInsert);
+        if (mNotifyOnChange) {
+            notifyItemInserted(positionOfInsert);
+        }
     }
 
     /**
@@ -149,7 +163,9 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
             positionOfInsert = mObjects.size();
             mObjects.add(object);
         }
-        notifyItemInserted(positionOfInsert);
+        if (mNotifyOnChange) {
+            notifyItemInserted(positionOfInsert);
+        }
     }
 
     /**
@@ -162,7 +178,9 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
         synchronized (mLock) {
             mObjects.add(position, object);
         }
-        notifyItemInserted(position);
+        if (mNotifyOnChange) {
+            notifyItemInserted(position);
+        }
     }
 
 
@@ -175,7 +193,9 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
         synchronized (mLock) {
             mObjects.remove(position);
         }
-        notifyItemRemoved(position);
+        if (mNotifyOnChange) {
+            notifyItemRemoved(position);
+        }
     }
 
 
@@ -203,8 +223,10 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
             nbObjectRemoved = mObjects.size();
             mObjects.clear();
         }
-        for (int i = nbObjectRemoved - 1; i >= 0; i--) {
-            notifyItemRemoved(i);
+        if (mNotifyOnChange) {
+            for (int i = nbObjectRemoved - 1; i >= 0; i--) {
+                notifyItemRemoved(i);
+            }
         }
     }
 
