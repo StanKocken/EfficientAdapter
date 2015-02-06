@@ -116,6 +116,13 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
     }
 
     /**
+     * Allow to clear the cache of view retrieved
+     */
+    public void clearViewCached(int viewId) {
+        mSparseSparseArrayView.remove(viewId);
+    }
+
+    /**
      * Look for a child view with the given id.  If this view has the given
      * id, return this view.
      * <p/>
