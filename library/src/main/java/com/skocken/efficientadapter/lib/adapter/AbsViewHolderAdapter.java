@@ -286,32 +286,7 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     @Override
     public AbsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = generateView(parent, viewType);
-        final AbsViewHolder viewHolder = generateViewHolder(v, viewType);
-        if (viewHolder != null) {
-            if (viewHolder.isClickable() && mOnItemClickListener != null) {
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onClickItem(viewHolder, viewHolder.getPosition());
-                    }
-                });
-            } else {
-                v.setOnClickListener(null);
-            }
-
-            if (viewHolder.isLongClickable() && mOnItemLongClickListener != null) {
-                v.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        onLongClickItem(viewHolder, viewHolder.getPosition());
-                        return true;
-                    }
-                });
-            } else {
-                v.setOnLongClickListener(null);
-            }
-        }
-        return viewHolder;
+        return generateViewHolder(v, viewType);
     }
 
 
