@@ -291,12 +291,54 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
 
 
     @Override
-    public void onBindViewHolder(AbsViewHolder absViewHolder, int position) {
+    public void onBindViewHolder(AbsViewHolder viewHolder, int position) {
         T object;
         synchronized (mLock) {
             object = mObjects.get(position);
         }
-        absViewHolder.onBindView(object);
+        viewHolder.onBindView(object);
+
+        boolean isClickable = viewHolder.isClickable() && mOnItemClickListener != null;
+        setClickListenerOnView(viewHolder, isClickable);
+
+        boolean isLongClickable = viewHolder.isLongClickable() && mOnItemLongClickListener != null;
+        setLongClickListenerOnView(viewHolder, isLongClickable);
+    }
+
+    protected void setClickListenerOnView(final AbsViewHolder viewHolder, boolean clickable) {
+        View view = viewHolder.getView();
+        if (clickable != view.isClickable()) {
+            if (clickable) {
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickItem(viewHolder, viewHolder.getPosition());
+                    }
+                });
+            } else {
+                view.setOnClickListener(null);
+                view.setClickable(false);
+            }
+        }
+    }
+
+    protected void setLongClickListenerOnView(final AbsViewHolder viewHolder,
+            boolean longClickable) {
+        View view = viewHolder.getView();
+        if (longClickable != view.isLongClickable()) {
+            if (longClickable) {
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        onLongClickItem(viewHolder, viewHolder.getPosition());
+                        return true;
+                    }
+                });
+            } else {
+                view.setOnLongClickListener(null);
+                view.setLongClickable(false);
+            }
+        }
     }
 
     @Override
