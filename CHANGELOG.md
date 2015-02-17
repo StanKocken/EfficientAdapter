@@ -1,6 +1,11 @@
 Change Log
 ===============================================================================
 
+Version 1.2.1 *(2015-02-17)*
+----------------------------
+
+ * The click listener can now be changed dynamically (the adapter will re-call isClickable() after updateView() of AbsViewHolder)
+
 Version 1.2.0 *(2015-01-07)*
 ----------------------------
 
