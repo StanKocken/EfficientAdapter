@@ -40,7 +40,6 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
 
     /**
      * Get the last object set to this viewholder
-     * @return
      */
     public T getObject() {
         return mObject;
@@ -94,6 +93,7 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
 
     /**
      * Determine if a click listener should be automatically added to the view of this view holder
+     *
      * @return true you want to have this view clickable
      */
     public boolean isClickable() {
@@ -101,11 +101,37 @@ public abstract class AbsViewHolder<T> extends RecyclerView.ViewHolder {
     }
 
     /**
-     * Determine if a long click listener should be automatically added to the view of this view holder
+     * Determine if a long click listener should be automatically added to the view of this view
+     * holder
+     *
      * @return true you want to have this view clickable
      */
     public boolean isLongClickable() {
         return true;
+    }
+
+    /**
+     * Allow to clear the cache of view retrieved
+     */
+    public void clearViewsCached() {
+        mSparseSparseArrayView.clear();
+    }
+
+    /**
+     * Allow to clear the cache of view retrieved
+     */
+    public void clearViewCached(int viewId) {
+        clearViewCached(0, viewId);
+    }
+
+    /**
+     * Allow to clear the cache of view retrieved
+     */
+    public void clearViewCached(int parentId, int viewId) {
+        SparseArray<View> sparseArrayViewsParent = mSparseSparseArrayView.get(parentId);
+        if (sparseArrayViewsParent != null) {
+            sparseArrayViewsParent.remove(viewId);
+        }
     }
 
     /**

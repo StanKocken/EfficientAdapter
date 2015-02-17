@@ -215,6 +215,16 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     }
 
     /**
+     * Move object
+     */
+    public void moved(int from, int to) {
+        synchronized (mLock) {
+            mObjects.add(to, mObjects.remove(from));
+        }
+        notifyItemMoved(from, to);
+    }
+
+    /**
      * Remove all elements from the list.
      */
     public void clear() {
