@@ -45,6 +45,16 @@ public class SimpleListActivity extends Activity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        adapter.setOnItemLongClickListener(new AbsViewHolderAdapter.OnItemLongClickListener() {
+            @Override
+            public void onLongItemClick(AbsViewHolderAdapter parent, View view, Object object,
+                    int position) {
+                Toast.makeText(view.getContext(),
+                        "Long-Click on: " + object.toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private List<Plane> generateListOfPlane() {
