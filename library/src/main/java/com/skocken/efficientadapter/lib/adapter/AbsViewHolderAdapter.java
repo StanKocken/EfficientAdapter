@@ -128,6 +128,21 @@ public abstract class AbsViewHolderAdapter<T> extends RecyclerView.Adapter<AbsVi
     }
 
     /**
+     * Searches this {@code List} for the specified object and returns the index of the
+     * first occurrence.
+     *
+     * @param object
+     *            the object to search for.
+     * @return the index of the first occurrence of the object or -1 if the
+     *         object was not found.
+     */
+    public int indexOf(T object) {
+        synchronized (mLock) {
+            return mObjects.indexOf(object);
+        }
+    }
+
+    /**
      * Adds the specified Collection at the end of the array.
      *
      * @param collection The Collection to add at the end of the array.
