@@ -1,6 +1,6 @@
 package com.skocken.efficientadapter.example.models;
 
-public class Book {
+public class Book implements Item {
 
     private String mAuthor;
 

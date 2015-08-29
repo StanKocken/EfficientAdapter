@@ -1,6 +1,6 @@
 package com.skocken.efficientadapter.example.models;
 
-public class Plane {
+public class Plane implements Item {
 
     private String mManufacturer;
 
