@@ -2,13 +2,13 @@ package com.skocken.efficientadapter.example.viewholders;
 
 import com.skocken.efficientadapter.example.R;
 import com.skocken.efficientadapter.example.models.Plane;
-import com.skocken.efficientadapter.lib.viewholder.AbsViewHolder;
+import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-public class PlaneViewHolder extends AbsViewHolder<Plane> {
+public class PlaneViewHolder extends EfficientViewHolder<Plane> {
 
     public PlaneViewHolder(View itemView) {
         super(itemView);

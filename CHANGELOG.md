@@ -1,6 +1,26 @@
 Change Log
 ===============================================================================
 
+Version 2.0 *(2015-09-19)*
+----------------------------
+
+ * Re-write the adapter to be compatible with ViewPager
+
+How to migrate from 1.x:
+- the gradle import change from `com.skocken:efficientadapter.lib:1.2.+`  to `com.skocken:efficientadapter:2.0` (`.lib` disappear)
+- Rename all `AbsViewHolderAdapter` to `EfficientAdapter`
+- Rename all `AbsViewHolder` to `EfficientViewHolder`
+- Rename all `HeterogeneousAdapter` and `SimpleAdapter` to `EfficientRecyclerAdapter`
+- Rename all `AbsViewHolderAdapter.OnItemClickListener` by `EfficientAdapter.OnItemClickListener`
+- The function `remove(int position)` changed to `removeAt(int position)`
+- The function `moved(int from, int to)` changed to `move(int from, int to)`
+- The method `protected Class<?> getViewHolderClass()` into the Adapter is going `public` now
+- The method `protected int getLayoutResId()` into the Adapter is going `public` now
+- Proguard: replace `AbsViewHolder` by `EfficientViewHolder`
+
+
+
+
 Version 1.2.1 *(2015-02-17)*
 ----------------------------
 
@@ -20,4 +40,4 @@ Version 1.1.0 *(2015-01-03)*
 
 Version 1.0.0 *(2011-03-07)*
 ----------------------------
-Initial release.
+ * Initial release.

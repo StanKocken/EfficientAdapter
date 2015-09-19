@@ -4,5 +4,6 @@
     <string name="app_name">EfficientAdapter</string>
     <string name="simple_list">Simple list</string>
     <string name="heterogeneous_list">Heterogeneous list</string>
+    <string name="viewpager">ViewPager</string>
 
 </resources>

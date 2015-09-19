@@ -16,4 +16,9 @@
             android:layout_height="wrap_content"
             android:onClick="onClickHeterogeneousList"
             android:text="@string/heterogeneous_list"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickViewPager"
+            android:text="@string/viewpager"/>
 </LinearLayout>

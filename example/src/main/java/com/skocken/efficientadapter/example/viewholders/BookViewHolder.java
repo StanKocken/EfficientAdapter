@@ -2,13 +2,13 @@ package com.skocken.efficientadapter.example.viewholders;
 
 import com.skocken.efficientadapter.example.R;
 import com.skocken.efficientadapter.example.models.Book;
-import com.skocken.efficientadapter.lib.viewholder.AbsViewHolder;
+import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-public class BookViewHolder extends AbsViewHolder<Book> {
+public class BookViewHolder extends EfficientViewHolder<Book> {
 
     public BookViewHolder(View itemView) {
         super(itemView);

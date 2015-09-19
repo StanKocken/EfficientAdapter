@@ -2,10 +2,9 @@ package com.skocken.efficientadapter.example.activities;
 
 import com.skocken.efficientadapter.example.R;
 import com.skocken.efficientadapter.example.models.Plane;
-import com.skocken.efficientadapter.example.viewholders.BookViewHolder;
 import com.skocken.efficientadapter.example.viewholders.PlaneViewHolder;
-import com.skocken.efficientadapter.lib.adapter.AbsViewHolderAdapter;
-import com.skocken.efficientadapter.lib.adapter.SimpleAdapter;
+import com.skocken.efficientadapter.lib.adapter.EfficientAdapter;
+import com.skocken.efficientadapter.lib.adapter.EfficientRecyclerAdapter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -31,30 +30,33 @@ public class SimpleListActivity extends Activity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        SimpleAdapter adapter = new SimpleAdapter<Plane>(R.layout.item_plane, PlaneViewHolder.class,
-                generateListOfPlane());
+        EfficientRecyclerAdapter<Plane> adapter =
+                new EfficientRecyclerAdapter<>(R.layout.item_plane, PlaneViewHolder.class,
+                        generateListOfPlane());
 
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new AbsViewHolderAdapter.OnItemClickListener<Plane>() {
-            @Override
-            public void onItemClick(AbsViewHolderAdapter<Plane> parent, View view, Plane object,
-                    int position) {
-                Toast.makeText(view.getContext(),
-                        "Click on: " + object.toString(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        adapter.setOnItemClickListener(
+                new EfficientAdapter.OnItemClickListener<Plane>() {
+                    @Override
+                    public void onItemClick(EfficientAdapter<Plane> parent, View view, Plane object,
+                            int position) {
+                        Toast.makeText(view.getContext(),
+                                "Click on: " + object.toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-        adapter.setOnItemLongClickListener(new AbsViewHolderAdapter.OnItemLongClickListener() {
-            @Override
-            public void onLongItemClick(AbsViewHolderAdapter parent, View view, Object object,
-                    int position) {
-                Toast.makeText(view.getContext(),
-                        "Long-Click on: " + object.toString(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        adapter.setOnItemLongClickListener(
+                new EfficientAdapter.OnItemLongClickListener<Plane>() {
+                    @Override
+                    public void onLongItemClick(EfficientAdapter<Plane> adapter, View view,
+                            Plane object, int position) {
+                        Toast.makeText(view.getContext(),
+                                "Longclick on: " + object.toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private List<Plane> generateListOfPlane() {
@@ -150,7 +152,8 @@ public class SimpleListActivity extends Activity {
         listPlane.add(new Plane("Boeing", "294"));
         listPlane.add(new Plane("Boeing", "299"));
         listPlane.add(new Plane("Boeing", "306"));
-        listPlane.add(new Plane("Boeing", "307 Stratoliner / Stratofreighter / Strato-clipper / C-75"));
+        listPlane.add(new Plane("Boeing",
+                "307 Stratoliner / Stratofreighter / Strato-clipper / C-75"));
         listPlane.add(new Plane("Boeing", "314 Clipper"));
         listPlane.add(new Plane("Boeing", "316"));
         listPlane.add(new Plane("Boeing", "320"));
@@ -197,4 +200,5 @@ public class SimpleListActivity extends Activity {
 
         return listPlane;
     }
+
 }

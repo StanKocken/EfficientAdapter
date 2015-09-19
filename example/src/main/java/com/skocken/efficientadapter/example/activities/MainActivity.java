@@ -24,4 +24,8 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, HeterogeneousListActivity.class));
     }
 
+    public void onClickViewPager(View view) {
+        startActivity(new Intent(this, ViewPagerActivity.class));
+    }
+
 }
