@@ -98,7 +98,7 @@ To be compatible with proguard you need to add this lines in your file
 ## Gradle
 
     dependencies {
-        compile 'com.skocken:efficientadapter:2.0'
+        compile 'com.skocken:efficientadapter:2.0.1'
     }
 
 
