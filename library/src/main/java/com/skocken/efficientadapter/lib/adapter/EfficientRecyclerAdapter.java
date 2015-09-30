@@ -16,7 +16,7 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
 
     private final AdapterHelper<T> mBaseAdapter;
 
-    private boolean mNotifyOnChange;
+    private boolean mNotifyOnChange = true;
 
     /**
      * Constructor
