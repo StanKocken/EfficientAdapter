@@ -127,8 +127,8 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     @Override
     public void remove(T object) {
         int positionOfRemove = mBaseAdapter.remove(object);
-        if (positionOfRemove >= 0) {
-            removeAt(positionOfRemove);
+        if (mNotifyOnChange && positionOfRemove >= 0) {
+            notifyItemRemoved(positionOfRemove);
         }
     }
 
