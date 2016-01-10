@@ -17,6 +17,8 @@ Create a class ViewHolder (`BookViewHolder` for example). The method `updateView
         protected void updateView(Context context, Book object) {
             TextView textView = findViewByIdEfficient(R.id.title_textview);
             textView.setText(object.getTitle());
+			// or just
+			setText(R.id.title_textview, object.getTitle());
         }
     }
 
@@ -98,7 +100,7 @@ To be compatible with proguard you need to add this lines in your file
 ## Gradle
 
     dependencies {
-        compile 'com.skocken:efficientadapter:2.0.2'
+        compile 'com.skocken:efficientadapter:2.0.3'
     }
 
 
