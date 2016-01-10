@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
 
     // JUnit test dependencies
     testCompile('junit:junit:4.12')
