@@ -11,6 +11,9 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.view.View;
 
@@ -131,6 +134,40 @@ public class EfficientViewHolderTest extends TestCase {
     private TestEfficientViewHolder newEfficientViewHolder() {
         View view = Mockito.mock(View.class);
         return new TestEfficientViewHolder(view);
+    }
+
+    @Test
+    public void testDelegateToViewHolder() throws Exception {
+        final EfficientCacheView cacheView = Mockito.mock(EfficientCacheView.class);
+        View view = Mockito.mock(View.class);
+        EfficientViewHolder subject = new EfficientViewHolder(view) {
+            @Override
+            EfficientCacheView createCacheView(View itemView) {
+                return cacheView;
+            }
+
+            @Override
+            protected void updateView(Context context, Object object) {
+            }
+        };
+        int expectedViewId = 234;
+
+        subject.setBackground(expectedViewId, Mockito.mock(Drawable.class));
+        subject.setBackgroundColor(expectedViewId, 2);
+        subject.setBackgroundResource(expectedViewId, android.R.drawable.btn_default);
+        subject.setTag(expectedViewId, new Object());
+        subject.setTag(expectedViewId, 23, new Object());
+        subject.setText(expectedViewId, "fake_text");
+        subject.setText(expectedViewId, android.R.string.cancel);
+        subject.setTextColor(expectedViewId, 2);
+        subject.setTextSize(expectedViewId, 2);
+        subject.setTextSize(expectedViewId, 3, 2);
+        subject.setImageViewResource(expectedViewId, android.R.drawable.btn_default);
+        subject.setImageDrawable(expectedViewId, Mockito.mock(Drawable.class));
+        subject.setImageUri(expectedViewId, Mockito.mock(Uri.class));
+        subject.setImageBitmap(expectedViewId, Mockito.mock(Bitmap.class));
+
+        verify(cacheView, times(14)).findViewByIdEfficient(expectedViewId);
     }
 
     private static class TestEfficientViewHolder extends EfficientViewHolder {

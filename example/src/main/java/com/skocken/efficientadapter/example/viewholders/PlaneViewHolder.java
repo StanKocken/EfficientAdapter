@@ -6,7 +6,6 @@ import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.TextView;
 
 public class PlaneViewHolder extends EfficientViewHolder<Plane> {
 
@@ -16,11 +15,8 @@ public class PlaneViewHolder extends EfficientViewHolder<Plane> {
 
     @Override
     protected void updateView(Context context, Plane object) {
-        ((TextView) findViewByIdEfficient(R.id.manufacturer_textview)).setText(
-                object.getManufacturer());
-        ((TextView) findViewByIdEfficient(R.id.model_textview)).setText(
-                object.getModel());
-
+        setText(R.id.manufacturer_textview, object.getManufacturer());
+        setText(R.id.model_textview, object.getModel());
     }
 
     @Override
