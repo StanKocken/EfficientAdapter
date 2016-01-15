@@ -1,11 +1,11 @@
 package com.skocken.efficientadapter.lib.adapter;
 
-import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
-
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +14,8 @@ import java.util.List;
 
 public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientAdapter<T> {
 
-    private SparseArray<List<EfficientViewHolder>> mRecycleViewHolders = new SparseArray<>();
-
     private final AdapterHelper<T> mBaseAdapter;
+    private SparseArray<List<EfficientViewHolder>> mRecycleViewHolders = new SparseArray<>();
 
     /**
      * Constructor
@@ -185,7 +184,7 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
             mBaseAdapter.throwMissingViewHolder(viewType);
             return null;
         }
-        return mBaseAdapter.generateViewHolder(v, viewHolderClass);
+        return mBaseAdapter.generateViewHolder(v, viewHolderClass, this);
     }
 
     @Override
