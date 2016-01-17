@@ -1,11 +1,11 @@
 package com.skocken.efficientadapter.lib.adapter;
 
-import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ class AdapterHelper<T> {
      * @param objects         the objects to put in this adapter
      */
     AdapterHelper(int layoutResId,
-            Class<? extends EfficientViewHolder<? extends T>> viewHolderClass, T... objects) {
+                  Class<? extends EfficientViewHolder<? extends T>> viewHolderClass, T... objects) {
         this(layoutResId, viewHolderClass, new ArrayList<>(Arrays.asList(objects)));
     }
 
@@ -64,7 +64,7 @@ class AdapterHelper<T> {
      * @param objects         the objects to put in this adapter
      */
     AdapterHelper(int layoutResId,
-            Class<? extends EfficientViewHolder<? extends T>> viewHolderClass, List<T> objects) {
+                  Class<? extends EfficientViewHolder<? extends T>> viewHolderClass, List<T> objects) {
         if (objects == null) {
             mObjects = new ArrayList<>();
         } else {
@@ -77,7 +77,7 @@ class AdapterHelper<T> {
     /**
      * Register a callback to be invoked when an item in this AbsViewHolderAdapter has
      * been long-clicked.
-     *
+     * <p/>
      * Your view holder must allow the click by overriding the method "isClickable()"
      *
      * @param listener The callback that will be invoked.
@@ -89,7 +89,7 @@ class AdapterHelper<T> {
     /**
      * Register a callback to be invoked when an item in this AbsViewHolderAdapter has
      * been clicked.
-     *
+     * <p/>
      * Your view holder must allow the click by overriding the method "isClickable()"
      *
      * @param listener The callback that will be invoked.
@@ -258,7 +258,7 @@ class AdapterHelper<T> {
     }
 
     void setClickListenerOnView(final EfficientAdapter<T> efficientAdapter,
-            final EfficientViewHolder viewHolder) {
+                                final EfficientViewHolder viewHolder) {
         View view = viewHolder.getView();
         boolean clickable = viewHolder.isClickable() && mOnItemClickListener != null;
         if (clickable) {
@@ -275,7 +275,7 @@ class AdapterHelper<T> {
     }
 
     void setLongClickListenerOnView(final EfficientAdapter<T> efficientAdapter,
-            final EfficientViewHolder viewHolder) {
+                                    final EfficientViewHolder viewHolder) {
         View view = viewHolder.getView();
         boolean longClickable = viewHolder.isLongClickable() && mOnItemLongClickListener != null;
         if (longClickable) {
@@ -293,31 +293,41 @@ class AdapterHelper<T> {
     }
 
     <T extends EfficientViewHolder> EfficientViewHolder generateViewHolder(View v,
-            Class<T> viewHolderClass) {
-        Constructor<?> constructorWithView = getConstructorWithView(viewHolderClass);
-        try {
-            Object viewHolder = constructorWithView.newInstance(v);
-            return (EfficientViewHolder) viewHolder;
-        } catch (Exception e) {
-            throw new RuntimeException(
-                    "Impossible to instantiate "
-                            + viewHolderClass.getSimpleName(), e);
-        }
-    }
-
-    Constructor<?> getConstructorWithView(
-            Class<? extends EfficientViewHolder> viewHolderClass) {
+                                                                           Class<T> viewHolderClass, EfficientAdapter adapter) {
         Constructor<?>[] constructors = viewHolderClass.getDeclaredConstructors();
-        if (constructors != null) {
-            for (Constructor<?> constructor : constructors) {
-                Class<?>[] parameterTypes = constructor.getParameterTypes();
-                if (parameterTypes != null
-                        && parameterTypes.length == 1
-                        && parameterTypes[0].isAssignableFrom(View.class)) {
-                    return constructor;
+
+        if (constructors == null) {
+            throw new IllegalArgumentException(
+                    "Impossible to found a constructor with a view for "
+                            + viewHolderClass.getSimpleName());
+        }
+
+        for (Constructor<?> constructor : constructors) {
+            Class<?>[] parameterTypes = constructor.getParameterTypes();
+
+            if (parameterTypes == null) continue;
+
+            try {
+                //single or static inner class ViewHolder
+                if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
+                    Object viewHolder = constructor.newInstance(v);
+                    return (EfficientViewHolder) viewHolder;
                 }
+
+                // inner class ViewHolder inside EfficientAdapter
+                boolean isViewHolderInAdapter = parameterTypes.length == 2 && EfficientAdapter.class.isAssignableFrom(parameterTypes[0]) && View.class.isAssignableFrom(parameterTypes[1]);
+
+                if (isViewHolderInAdapter) {
+                    Object viewHolder = constructor.newInstance(adapter, v);
+                    return (EfficientViewHolder) viewHolder;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(
+                        "Impossible to instantiate "
+                                + viewHolderClass.getSimpleName(), e);
             }
         }
+
         throw new IllegalArgumentException(
                 "Impossible to found a constructor with a view for "
                         + viewHolderClass.getSimpleName());
@@ -335,7 +345,7 @@ class AdapterHelper<T> {
     }
 
     private void onClickItem(EfficientAdapter<T> efficientAdapter,
-            EfficientViewHolder viewHolder) {
+                             EfficientViewHolder viewHolder) {
         if (mOnItemClickListener != null) {
             T object = (T) viewHolder.getObject();
             View view = viewHolder.getView();
@@ -345,7 +355,7 @@ class AdapterHelper<T> {
     }
 
     private void onLongClickItem(EfficientAdapter<T> efficientAdapter,
-            EfficientViewHolder viewHolder) {
+                                 EfficientViewHolder viewHolder) {
         if (mOnItemLongClickListener != null) {
             T object = (T) viewHolder.getObject();
             View view = viewHolder.getView();

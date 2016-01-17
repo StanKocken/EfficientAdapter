@@ -1,10 +1,10 @@
 package com.skocken.efficientadapter.lib.adapter;
 
-import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -213,7 +213,7 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
             mBaseAdapter.throwMissingViewHolder(viewType);
             return null;
         }
-        return mBaseAdapter.generateViewHolder(v, viewHolderClass);
+        return mBaseAdapter.generateViewHolder(v, viewHolderClass, this);
     }
 
     @Override
