@@ -64,7 +64,8 @@ class AdapterHelper<T> {
      * @param objects         the objects to put in this adapter
      */
     AdapterHelper(int layoutResId,
-                  Class<? extends EfficientViewHolder<? extends T>> viewHolderClass, List<T> objects) {
+                  Class<? extends EfficientViewHolder<? extends T>> viewHolderClass,
+                  List<T> objects) {
         if (objects == null) {
             mObjects = new ArrayList<>();
         } else {
@@ -292,39 +293,39 @@ class AdapterHelper<T> {
         }
     }
 
-    <T extends EfficientViewHolder> EfficientViewHolder generateViewHolder(View v,
-                                                                           Class<T> viewHolderClass, EfficientAdapter adapter) {
+    <T extends EfficientViewHolder>
+    EfficientViewHolder generateViewHolder(View v,
+                                           Class<T> viewHolderClass,
+                                           EfficientAdapter adapter) {
         Constructor<?>[] constructors = viewHolderClass.getDeclaredConstructors();
 
         if (constructors == null) {
             throw new IllegalArgumentException(
-                    "Impossible to found a constructor with a view for "
-                            + viewHolderClass.getSimpleName());
+                    "Impossible to found a constructor for " + viewHolderClass.getSimpleName());
         }
 
         for (Constructor<?> constructor : constructors) {
             Class<?>[] parameterTypes = constructor.getParameterTypes();
 
-            if (parameterTypes == null) continue;
+            if (parameterTypes == null) {
+                continue;
+            }
 
             try {
-                //single or static inner class ViewHolder
-                if (parameterTypes.length == 1 && View.class.isAssignableFrom(parameterTypes[0])) {
+                if (isAssignableFrom(parameterTypes, View.class)) {
+                    //single or static inner class ViewHolder
                     Object viewHolder = constructor.newInstance(v);
                     return (EfficientViewHolder) viewHolder;
                 }
 
-                // inner class ViewHolder inside EfficientAdapter
-                boolean isViewHolderInAdapter = parameterTypes.length == 2 && EfficientAdapter.class.isAssignableFrom(parameterTypes[0]) && View.class.isAssignableFrom(parameterTypes[1]);
-
-                if (isViewHolderInAdapter) {
+                if (isAssignableFrom(parameterTypes, EfficientAdapter.class, View.class)) {
+                    // inner class ViewHolder inside EfficientAdapter
                     Object viewHolder = constructor.newInstance(adapter, v);
                     return (EfficientViewHolder) viewHolder;
                 }
             } catch (Exception e) {
                 throw new RuntimeException(
-                        "Impossible to instantiate "
-                                + viewHolderClass.getSimpleName(), e);
+                        "Impossible to instantiate " + viewHolderClass.getSimpleName(), e);
             }
         }
 
@@ -333,9 +334,21 @@ class AdapterHelper<T> {
                         + viewHolderClass.getSimpleName());
     }
 
+    static boolean isAssignableFrom(Class<?>[] parameterTypes, Class<?>... classes) {
+        if (parameterTypes == null || classes == null || parameterTypes.length != classes.length) {
+            return false;
+        }
+        for (int i = 0; i < parameterTypes.length; i++) {
+            if (!classes[i].isAssignableFrom(parameterTypes[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     void throwMissingLayoutResId(int viewType) {
         throw new IllegalArgumentException("No default layout found for the view type '"
-                + viewType + "'.");
+                                                   + viewType + "'.");
     }
 
     void throwMissingViewHolder(int viewType) {
