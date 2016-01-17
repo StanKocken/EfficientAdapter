@@ -3,6 +3,7 @@ package com.skocken.efficientadapter.example.activities;
 import com.skocken.efficientadapter.example.R;
 import com.skocken.efficientadapter.example.models.Book;
 import com.skocken.efficientadapter.example.models.Item;
+import com.skocken.efficientadapter.example.models.Music;
 import com.skocken.efficientadapter.example.models.Plane;
 import com.skocken.efficientadapter.example.viewholders.BookViewHolder;
 import com.skocken.efficientadapter.example.viewholders.PlaneViewHolder;
@@ -11,6 +12,7 @@ import com.skocken.efficientadapter.lib.adapter.EfficientRecyclerAdapter;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,6 +61,7 @@ public class HeterogeneousListActivity extends Activity {
         objects.add(new Plane("Airbus", "CC-150 Polaris Canadian Armed Forces"));
         objects.add(new Plane("Airbus", "A318"));
         objects.add(new Plane("Airbus", "A319"));
+        objects.add(new Music("Michael Jackson"));
         objects.add(new Plane("Airbus", "A319CJ"));
         objects.add(new Plane("Airbus", "A320"));
         objects.add(new Plane("Airbus", "A321"));
@@ -203,6 +206,8 @@ public class HeterogeneousListActivity extends Activity {
 
         private static final int VIEW_TYPE_PLANE = 1;
 
+        private static final int VIEW_TYPE_MUSIC = 2;
+
         public PlaneBookAdapter(List<Item> objects) {
             super(objects);
         }
@@ -211,8 +216,12 @@ public class HeterogeneousListActivity extends Activity {
         public int getItemViewType(int position) {
             if (get(position) instanceof Plane) {
                 return VIEW_TYPE_PLANE;
-            } else {
+            } else if (get(position) instanceof Book) {
                 return VIEW_TYPE_BOOK;
+            } else if (get(position) instanceof Music) {
+                return VIEW_TYPE_MUSIC;
+            } else {
+                return -1;
             }
         }
 
@@ -224,6 +233,8 @@ public class HeterogeneousListActivity extends Activity {
                     return BookViewHolder.class;
                 case VIEW_TYPE_PLANE:
                     return PlaneViewHolder.class;
+                case VIEW_TYPE_MUSIC:
+                    return MusicViewHolder.class;
                 default:
                     return null;
             }
@@ -236,8 +247,22 @@ public class HeterogeneousListActivity extends Activity {
                     return R.layout.item_book;
                 case VIEW_TYPE_PLANE:
                     return R.layout.item_plane;
+                case VIEW_TYPE_MUSIC:
+                    return R.layout.item_music;
                 default:
                     return 0;
+            }
+        }
+
+        private class MusicViewHolder extends EfficientViewHolder<Music> {
+
+            public MusicViewHolder(View itemView) {
+                super(itemView);
+            }
+
+            @Override
+            protected void updateView(Context context, Music object) {
+                setText(R.id.title_textview, object.getArtist());
             }
         }
     }
