@@ -176,7 +176,7 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
 
     @Override
     public void onBindViewHolder(EfficientViewHolder viewHolder, int position) {
-        T object = mBaseAdapter.get(position);
+        T object = get(position);
         viewHolder.onBindView(object, position);
 
         mBaseAdapter.setClickListenerOnView(this, viewHolder);
