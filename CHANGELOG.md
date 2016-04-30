@@ -2,6 +2,14 @@ Change Log
 ===============================================================================
 
 
+Version 2.1.0 *(2016-04-30)*
+----------------------------
+
+ * Move the item click listener to the EfficientViewHolder.
+ * Upload to JCenter instead of MavenCentral
+ * Upgrade to support library
+
+
 Version 2.0.3 *(2016-01-10)*
 ----------------------------
 

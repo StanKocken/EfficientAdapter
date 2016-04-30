@@ -91,7 +91,8 @@ By default, the view is clickable if you have a listener on your adapter.
 
 ## Proguard
 
-To be compatible with proguard you need to add this lines in your file
+This library includes the proguard configuration file.
+If you want to add it manually:
 
     -keepclassmembers public class * extends com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder {
         public <init>(...);
@@ -100,7 +101,7 @@ To be compatible with proguard you need to add this lines in your file
 ## Gradle
 
     dependencies {
-        compile 'com.skocken:efficientadapter:2.0.3'
+        compile 'com.skocken:efficientadapter:2.1.0'
     }
 
 
