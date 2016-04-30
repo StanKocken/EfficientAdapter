@@ -13,7 +13,6 @@ public interface EfficientAdapter<T> {
 
     /**
      * Register a callback to be invoked when an item in this adapter has been clicked.
-     * <br />
      * An {@link EfficientViewHolder} can disable the click on it by overriding the method
      * {@link EfficientViewHolder#isLongClickable()} ()}
      *
@@ -23,7 +22,6 @@ public interface EfficientAdapter<T> {
 
     /**
      * Register a callback to be invoked when an item in this adapter has been long-clicked.
-     * <br />
      * An {@link EfficientViewHolder} can disable the long-click on it by overriding the method
      * {@link EfficientViewHolder#isClickable()}
      *
@@ -220,7 +218,7 @@ public interface EfficientAdapter<T> {
     void onViewDetachedFromWindow(EfficientViewHolder<T> holder);
 
     /**
-     * Called by {@link #onCreateViewHolder(ViewGroup, int)  when the adapter need to generate an
+     * Called by {@link #onCreateViewHolder(ViewGroup, int)}  when the adapter need to generate an
      * {@link EfficientViewHolder} for a particular viewType
      *
      * @param v        The root view of this {@link EfficientViewHolder}

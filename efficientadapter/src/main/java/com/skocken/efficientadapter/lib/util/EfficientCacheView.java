@@ -50,7 +50,6 @@ public class EfficientCacheView {
     /**
      * Look for a child view with the given id.  If this view has the given
      * id, return this view.
-     * <br />
      * The method is more efficient than a "normal" "findViewById": the second time you will
      * called it with the same argument, the view return will come from the cache.
      *
@@ -64,7 +63,6 @@ public class EfficientCacheView {
     /**
      * Look for a child view of the parent view id with the given id.  If this view has the given
      * id, return this view.
-     * <br />
      * The method is more efficient than a "normal" "findViewById" : the second time you will
      * called this method with the same argument, the view return will come from the cache.
      *

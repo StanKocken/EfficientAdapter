@@ -1,0 +1,42 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.skocken'                               // Maven Group ID for the artifact
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                groupId 'com.skocken'
+                artifactId 'efficientadapter'
+
+                // Add your description here
+                name "EfficientAdapter"
+                description "Create a new adapter for a RecyclerView or ViewPager is now much easier."
+                url 'https://github.com/StanKocken/EfficientAdapter'
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'stankocken'
+                        name 'Stan Kocken'
+                        email 'stan.kocken@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/StanKocken/EfficientAdapter.git'
+                    developerConnection 'https://github.com/StanKocken/EfficientAdapter.git'
+                    url 'https://github.com/StanKocken/EfficientAdapter.git'
+
+                }
+            }
+        }
+    }
+}
