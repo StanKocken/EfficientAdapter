@@ -76,6 +76,28 @@ class AdapterHelper<T> {
     }
 
     /**
+     * Called by the view to display the data at the specified position.
+     *
+     * <p>The default implementation of this method will call {@link EfficientViewHolder#onBindView(Object,
+     * int)}
+     * on the {@link EfficientViewHolder} and set the click listeners if necessary.</p>
+     *
+     * @param viewHolder The ViewHolder which should be updated to represent the contents of the
+     *                   item at the given position in the data set.
+     * @param position   The position of the item within the adapter's data set.
+     * @param adapter    The adapter source
+     */
+    public void onBindViewHolder(EfficientViewHolder<T> viewHolder, int position,
+                                 EfficientAdapter<T> adapter) {
+        T object = get(position);
+        viewHolder.onBindView(object, position);
+        viewHolder.setAdapter(adapter);
+
+        setClickListenerOnView(viewHolder);
+        setLongClickListenerOnView(viewHolder);
+    }
+
+    /**
      * Register a callback to be invoked when an item in this AbsViewHolderAdapter has
      * been long-clicked.
      * <p/>
@@ -97,6 +119,22 @@ class AdapterHelper<T> {
      */
     void setOnItemClickListener(EfficientAdapter.OnItemClickListener<T> listener) {
         mOnItemClickListener = listener;
+    }
+
+    /**
+     * Get the callback to be invoked when an item in this adapter has been clicked.
+     * @return listener The callback that will be invoked on item click.
+     */
+    public EfficientAdapter.OnItemClickListener<T> getOnItemClickListener() {
+        return mOnItemClickListener;
+    }
+
+    /**
+     * Get the callback to be invoked when an item in this adapter has been long-clicked.
+     * @return listener The callback that will be invoked on item long click.
+     */
+    public EfficientAdapter.OnItemLongClickListener<T> getOnItemLongClickListener() {
+        return mOnItemLongClickListener;
     }
 
     /**
@@ -258,45 +296,27 @@ class AdapterHelper<T> {
         return mViewHolderClass;
     }
 
-    void setClickListenerOnView(final EfficientAdapter<T> efficientAdapter,
-                                final EfficientViewHolder viewHolder) {
+    void setClickListenerOnView(EfficientViewHolder viewHolder) {
         View view = viewHolder.getView();
-        boolean clickable = viewHolder.isClickable() && mOnItemClickListener != null;
-        if (clickable) {
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickItem(efficientAdapter, viewHolder);
-                }
-            });
-        } else {
-            view.setOnClickListener(null);
+        View.OnClickListener listener = viewHolder.getOnClickListener(mOnItemClickListener != null);
+        view.setOnClickListener(listener);
+        if (listener == null) {
             view.setClickable(false);
         }
     }
 
-    void setLongClickListenerOnView(final EfficientAdapter<T> efficientAdapter,
-                                    final EfficientViewHolder viewHolder) {
+    void setLongClickListenerOnView(EfficientViewHolder viewHolder) {
         View view = viewHolder.getView();
-        boolean longClickable = viewHolder.isLongClickable() && mOnItemLongClickListener != null;
-        if (longClickable) {
-            view.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    onLongClickItem(efficientAdapter, viewHolder);
-                    return true;
-                }
-            });
-        } else {
-            view.setOnLongClickListener(null);
+        View.OnLongClickListener listener = viewHolder.getOnLongClickListener(mOnItemClickListener != null);
+        view.setOnLongClickListener(listener);
+        if (listener == null) {
             view.setLongClickable(false);
         }
     }
 
-    <T extends EfficientViewHolder>
-    EfficientViewHolder generateViewHolder(View v,
-                                           Class<T> viewHolderClass,
-                                           EfficientAdapter adapter) {
+    EfficientViewHolder<T> generateViewHolder(View v,
+                                           Class<? extends EfficientViewHolder<? extends T>> viewHolderClass,
+                                           EfficientAdapter<T> adapter) {
         Constructor<?>[] constructors = viewHolderClass.getDeclaredConstructors();
 
         if (constructors == null) {
@@ -312,16 +332,18 @@ class AdapterHelper<T> {
             }
 
             try {
+                Object viewHolder;
                 if (isAssignableFrom(parameterTypes, View.class)) {
                     //single or static inner class ViewHolder
-                    Object viewHolder = constructor.newInstance(v);
-                    return (EfficientViewHolder) viewHolder;
-                }
-
-                if (isAssignableFrom(parameterTypes, EfficientAdapter.class, View.class)) {
+                    viewHolder = constructor.newInstance(v);
+                } else if (isAssignableFrom(parameterTypes, EfficientAdapter.class, View.class)) {
                     // inner class ViewHolder inside EfficientAdapter
-                    Object viewHolder = constructor.newInstance(adapter, v);
-                    return (EfficientViewHolder) viewHolder;
+                    viewHolder = constructor.newInstance(adapter, v);
+                } else {
+                    viewHolder = null;
+                }
+                if (viewHolder instanceof EfficientViewHolder) {
+                    return (EfficientViewHolder<T>) viewHolder;
                 }
             } catch (Exception e) {
                 throw new RuntimeException(

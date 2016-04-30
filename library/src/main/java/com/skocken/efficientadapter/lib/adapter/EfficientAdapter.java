@@ -32,6 +32,18 @@ public interface EfficientAdapter<T> {
     void setOnItemLongClickListener(EfficientAdapter.OnItemLongClickListener<T> listener);
 
     /**
+     * Get the callback to be invoked when an item in this adapter has been clicked.
+     * @return listener The callback that will be invoked on item click.
+     */
+    EfficientAdapter.OnItemClickListener<T> getOnItemClickListener();
+
+    /**
+     * Get the callback to be invoked when an item in this adapter has been long-clicked.
+     * @return listener The callback that will be invoked on item long click.
+     */
+    EfficientAdapter.OnItemLongClickListener<T> getOnItemLongClickListener();
+
+    /**
      * Returns whether this {@code Adapter} contains this element.
      *
      * @param object the object to search for.
@@ -190,22 +202,22 @@ public interface EfficientAdapter<T> {
      *                   item at the given position in the data set.
      * @param position   The position of the item within the adapter's data set.
      */
-    void onBindViewHolder(EfficientViewHolder viewHolder, int position);
+    void onBindViewHolder(EfficientViewHolder<T> viewHolder, int position);
 
     /**
      * Called when the {@link EfficientViewHolder} has been recycled
      */
-    void onViewRecycled(EfficientViewHolder holder);
+    void onViewRecycled(EfficientViewHolder<T> holder);
 
     /**
      * Called when the {@link EfficientViewHolder} has been attached to window
      */
-    void onViewAttachedToWindow(EfficientViewHolder holder);
+    void onViewAttachedToWindow(EfficientViewHolder<T> holder);
 
     /**
      * Called when the {@link EfficientViewHolder} has been detached to window
      */
-    void onViewDetachedFromWindow(EfficientViewHolder holder);
+    void onViewDetachedFromWindow(EfficientViewHolder<T> holder);
 
     /**
      * Called by {@link #onCreateViewHolder(ViewGroup, int)  when the adapter need to generate an
@@ -215,7 +227,7 @@ public interface EfficientAdapter<T> {
      * @param viewType The view type of the new View.
      * @return a new {@link EfficientViewHolder}
      */
-    EfficientViewHolder generateViewHolder(View v, int viewType);
+    EfficientViewHolder<T> generateViewHolder(View v, int viewType);
 
     /**
      * Called by {@link #onCreateViewHolder(ViewGroup, int)} when the adapter need to generate a

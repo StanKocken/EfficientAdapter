@@ -15,7 +15,7 @@ import java.util.List;
 public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientAdapter<T> {
 
     private final AdapterHelper<T> mBaseAdapter;
-    private SparseArray<List<EfficientViewHolder>> mRecycleViewHolders = new SparseArray<>();
+    private SparseArray<List<EfficientViewHolder<T>>> mRecycleViewHolders = new SparseArray<>();
 
     /**
      * Constructor
@@ -67,6 +67,16 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     @Override
     public void setOnItemLongClickListener(OnItemLongClickListener<T> listener) {
         mBaseAdapter.setOnItemLongClickListener(listener);
+    }
+
+    @Override
+    public OnItemClickListener<T> getOnItemClickListener() {
+        return mBaseAdapter.getOnItemClickListener();
+    }
+
+    @Override
+    public OnItemLongClickListener<T> getOnItemLongClickListener() {
+        return mBaseAdapter.getOnItemLongClickListener();
     }
 
     @Override
@@ -155,11 +165,7 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
 
     @Override
     public void onBindViewHolder(EfficientViewHolder viewHolder, int position) {
-        T object = mBaseAdapter.get(position);
-        viewHolder.onBindView(object, position);
-
-        mBaseAdapter.setClickListenerOnView(this, viewHolder);
-        mBaseAdapter.setLongClickListenerOnView(this, viewHolder);
+        mBaseAdapter.onBindViewHolder(viewHolder, position, this);
     }
 
     @Override
@@ -178,8 +184,8 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     }
 
     @Override
-    public EfficientViewHolder generateViewHolder(View v, int viewType) {
-        Class<? extends EfficientViewHolder> viewHolderClass = getViewHolderClass(viewType);
+    public EfficientViewHolder<T> generateViewHolder(View v, int viewType) {
+        Class<? extends EfficientViewHolder<? extends T>> viewHolderClass = getViewHolderClass(viewType);
         if (viewHolderClass == null) {
             mBaseAdapter.throwMissingViewHolder(viewType);
             return null;
@@ -228,12 +234,12 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
 
     @Override
     public void destroyItem(ViewGroup collection, int position, Object object) {
-        EfficientViewHolder viewHolder = (EfficientViewHolder) object;
+        EfficientViewHolder<T> viewHolder = (EfficientViewHolder<T>) object;
         collection.removeView(viewHolder.getView());
         onViewDetachedFromWindow(viewHolder);
 
         int viewType = getItemViewType(position);
-        List<EfficientViewHolder> viewHolders = mRecycleViewHolders.get(viewType);
+        List<EfficientViewHolder<T>> viewHolders = mRecycleViewHolders.get(viewType);
         if (viewHolders == null) {
             viewHolders = new ArrayList<>();
         }
@@ -244,7 +250,7 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
         int viewType = getItemViewType(position);
-        List<EfficientViewHolder> viewHolders = mRecycleViewHolders.get(viewType);
+        List<EfficientViewHolder<T>> viewHolders = mRecycleViewHolders.get(viewType);
         EfficientViewHolder viewHolder;
         if (viewHolders == null || viewHolders.isEmpty()) {
             viewHolder = onCreateViewHolder(collection, viewType);

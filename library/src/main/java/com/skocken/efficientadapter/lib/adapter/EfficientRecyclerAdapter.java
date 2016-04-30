@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientViewHolder>
+public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientViewHolder<T>>
         implements EfficientAdapter<T> {
 
     private final AdapterHelper<T> mBaseAdapter;
@@ -72,6 +72,16 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     @Override
     public void setOnItemLongClickListener(EfficientAdapter.OnItemLongClickListener<T> listener) {
         mBaseAdapter.setOnItemLongClickListener(listener);
+    }
+
+    @Override
+    public OnItemClickListener<T> getOnItemClickListener() {
+        return mBaseAdapter.getOnItemClickListener();
+    }
+
+    @Override
+    public OnItemLongClickListener<T> getOnItemLongClickListener() {
+        return mBaseAdapter.getOnItemLongClickListener();
     }
 
     @Override
@@ -175,28 +185,24 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     }
 
     @Override
-    public void onBindViewHolder(EfficientViewHolder viewHolder, int position) {
-        T object = mBaseAdapter.get(position);
-        viewHolder.onBindView(object, position);
-
-        mBaseAdapter.setClickListenerOnView(this, viewHolder);
-        mBaseAdapter.setLongClickListenerOnView(this, viewHolder);
+    public void onBindViewHolder(EfficientViewHolder<T> viewHolder, int position) {
+        mBaseAdapter.onBindViewHolder(viewHolder, position, this);
     }
 
     @Override
-    public void onViewRecycled(EfficientViewHolder holder) {
+    public void onViewRecycled(EfficientViewHolder<T> holder) {
         super.onViewRecycled(holder);
         holder.onViewRecycled();
     }
 
     @Override
-    public void onViewAttachedToWindow(EfficientViewHolder holder) {
+    public void onViewAttachedToWindow(EfficientViewHolder<T> holder) {
         super.onViewAttachedToWindow(holder);
         holder.onViewAttachedToWindow();
     }
 
     @Override
-    public void onViewDetachedFromWindow(EfficientViewHolder holder) {
+    public void onViewDetachedFromWindow(EfficientViewHolder<T> holder) {
         super.onViewDetachedFromWindow(holder);
         holder.onViewDetachedFromWindow();
     }
@@ -207,8 +213,8 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     }
 
     @Override
-    public EfficientViewHolder generateViewHolder(View v, int viewType) {
-        Class<? extends EfficientViewHolder> viewHolderClass = getViewHolderClass(viewType);
+    public EfficientViewHolder<T> generateViewHolder(View v, int viewType) {
+        Class<? extends EfficientViewHolder<? extends T>> viewHolderClass = getViewHolderClass(viewType);
         if (viewHolderClass == null) {
             mBaseAdapter.throwMissingViewHolder(viewType);
             return null;

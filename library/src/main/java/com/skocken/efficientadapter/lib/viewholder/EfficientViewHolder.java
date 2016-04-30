@@ -1,5 +1,6 @@
 package com.skocken.efficientadapter.lib.viewholder;
 
+import com.skocken.efficientadapter.lib.adapter.EfficientAdapter;
 import com.skocken.efficientadapter.lib.util.EfficientCacheView;
 import com.skocken.efficientadapter.lib.util.ViewHelper;
 
@@ -15,9 +16,16 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
+
 public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
 
     private final EfficientCacheView mCacheView;
+
+    private WeakReference<EfficientAdapter<T>> mAdapterRef;
+
+    private ViewHolderClickListener mViewHolderClickListener;
+    private ViewHolderLongClickListener mViewHolderLongClickListener;
 
     private int mLastBindPosition = -1;
 
@@ -25,6 +33,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
 
     /**
      * @param itemView the root view of the view holder. This parameter cannot be null.
+     *
      * @throws NullPointerException if the view is null
      */
     public EfficientViewHolder(View itemView) {
@@ -36,13 +45,23 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
         return new EfficientCacheView(itemView);
     }
 
+    public void setAdapter(EfficientAdapter<T> adapter) {
+        if (adapter != getAdapter()) {
+            mAdapterRef = new WeakReference<>(adapter);
+        }
+    }
+
+    public EfficientAdapter<T> getAdapter() {
+        return mAdapterRef == null ? null : mAdapterRef.get();
+    }
+
     /**
      * Method called when we need to update the view hold by this class.
      *
      * @param object the object subject of this update
      */
-    public void onBindView(Object object, int position) {
-        mObject = (T) object;
+    public void onBindView(T object, int position) {
+        mObject = object;
         mLastBindPosition = position;
         updateView(mCacheView.getView().getContext(), mObject);
     }
@@ -137,6 +156,38 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
      */
     public boolean isLongClickable() {
         return true;
+    }
+
+    /**
+     * Get the OnClickListener to call when the user click on the item.
+     * @param adapterHasListener true if the calling adapter has a global listener on the item.
+     * @return the click listener to be put into the view.
+     */
+    public View.OnClickListener getOnClickListener(boolean adapterHasListener) {
+        if (isClickable() && adapterHasListener) {
+            if (mViewHolderClickListener == null) {
+                mViewHolderClickListener = new ViewHolderClickListener<>(this);
+            }
+        } else {
+            mViewHolderClickListener = null;
+        }
+        return mViewHolderClickListener;
+    }
+
+    /**
+     * Get the OnLongClickListener to call when the user long-click on the item.
+     * @param adapterHasListener true if the calling adapter has a global listener on the item.
+     * @return the long-click listener to be put into the view.
+     */
+    public View.OnLongClickListener getOnLongClickListener(boolean adapterHasListener) {
+        if (isLongClickable() && adapterHasListener) {
+            if (mViewHolderLongClickListener == null) {
+                mViewHolderLongClickListener = new ViewHolderLongClickListener<>(this);
+            }
+        } else {
+            mViewHolderLongClickListener = null;
+        }
+        return mViewHolderLongClickListener;
     }
 
     /**
@@ -325,5 +376,65 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
      */
     public void setImageBitmap(int viewId, Bitmap bm) {
         ViewHelper.setImageBitmap(mCacheView, viewId, bm);
+    }
+
+    private static class ViewHolderClickListener<T> implements View.OnClickListener {
+
+        private WeakReference<EfficientViewHolder<T>> mViewHolderRef;
+
+        public ViewHolderClickListener(EfficientViewHolder<T> viewHolder) {
+            mViewHolderRef = new WeakReference<>(viewHolder);
+        }
+
+        @Override
+        public void onClick(View v) {
+            EfficientViewHolder<T> viewHolder = mViewHolderRef.get();
+            if (viewHolder == null) {
+                return;
+            }
+            EfficientAdapter<T> adapter = viewHolder.getAdapter();
+            if (adapter == null) {
+                return;
+            }
+            EfficientAdapter.OnItemClickListener<T> listener = adapter.getOnItemClickListener();
+            if (listener == null) {
+                return;
+            }
+            T object = viewHolder.getObject();
+            View view = viewHolder.getView();
+            int position = viewHolder.getLastBindPosition();
+            listener.onItemClick(adapter, view, object, position);
+            listener.onItemClick(adapter, view, object, position);
+        }
+    }
+
+    private static class ViewHolderLongClickListener<T> implements View.OnLongClickListener {
+
+        private WeakReference<EfficientViewHolder<T>> mViewHolderRef;
+
+        public ViewHolderLongClickListener(EfficientViewHolder<T> viewHolder) {
+            mViewHolderRef = new WeakReference<>(viewHolder);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            EfficientViewHolder<T> viewHolder = mViewHolderRef.get();
+            if (viewHolder == null) {
+                return false;
+            }
+            EfficientAdapter<T> adapter = viewHolder.getAdapter();
+            if (adapter == null) {
+                return false;
+            }
+            EfficientAdapter.OnItemLongClickListener<T> listener = adapter.getOnItemLongClickListener();
+            if (listener == null) {
+                return false;
+            }
+            T object = viewHolder.getObject();
+            View view = viewHolder.getView();
+            int position = viewHolder.getLastBindPosition();
+            listener.onLongItemClick(adapter, view, object, position);
+            return true;
+        }
     }
 }
