@@ -404,7 +404,6 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
             View view = viewHolder.getView();
             int position = viewHolder.getLastBindPosition();
             listener.onItemClick(adapter, view, object, position);
-            listener.onItemClick(adapter, view, object, position);
         }
     }
 
