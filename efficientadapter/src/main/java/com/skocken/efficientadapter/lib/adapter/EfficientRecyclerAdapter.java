@@ -1,5 +1,6 @@
 package com.skocken.efficientadapter.lib.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import java.util.List;
 
 public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientViewHolder<T>>
         implements EfficientAdapter<T> {
+
+    protected static final int VIEW_TYPE_HEADER = 1001;
 
     private final AdapterHelper<T> mBaseAdapter;
 
@@ -158,6 +161,11 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
         }
     }
 
+    public void addHeaderView(View headerView) {
+        mBaseAdapter.addHeaderView(headerView);
+        notifyItemChanged(0);
+    }
+
     @Override
     public boolean isEmpty() {
         return mBaseAdapter.isEmpty();
@@ -179,14 +187,27 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (mBaseAdapter.getHeaderView() != null && position == 0) {
+            return VIEW_TYPE_HEADER;
+        }
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public EfficientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = generateView(parent, viewType);
+        if (viewType == VIEW_TYPE_HEADER) {
+            return new HeaderContainerViewHolder(v);
+        }
         return generateViewHolder(v, viewType);
     }
 
     @Override
     public void onBindViewHolder(EfficientViewHolder<T> viewHolder, int position) {
-        mBaseAdapter.onBindViewHolder(viewHolder, position, this);
+        if (0 < position && position < mBaseAdapter.size() + 1) {
+            mBaseAdapter.onBindViewHolder(viewHolder, position, this);
+        }
     }
 
     @Override
@@ -224,12 +245,16 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
 
     @Override
     public View generateView(ViewGroup parent, int viewType) {
-        int layoutResId = getLayoutResId(viewType);
-        if (layoutResId == 0) {
-            mBaseAdapter.throwMissingLayoutResId(viewType);
-            return null;
+        if (viewType == VIEW_TYPE_HEADER) {
+            return mBaseAdapter.getHeaderView();
+        } else {
+            int layoutResId = getLayoutResId(viewType);
+            if (layoutResId == 0) {
+                mBaseAdapter.throwMissingLayoutResId(viewType);
+                return null;
+            }
+            return mBaseAdapter.inflateView(parent, layoutResId);
         }
-        return mBaseAdapter.inflateView(parent, layoutResId);
     }
 
     @Override
@@ -244,5 +269,16 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
         // default implementation doesn't depend on 'viewType', we take the viewholder class from
         // the constructor
         return mBaseAdapter.getViewHolderClass();
+    }
+
+    static class HeaderContainerViewHolder extends EfficientViewHolder {
+
+        public HeaderContainerViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void updateView(Context context, Object object) {
+        }
     }
 }

@@ -1,17 +1,18 @@
 package com.skocken.efficientadapter.example.activities;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Toast;
+
 import com.skocken.efficientadapter.example.R;
 import com.skocken.efficientadapter.example.models.Plane;
 import com.skocken.efficientadapter.example.viewholders.PlaneViewHolder;
 import com.skocken.efficientadapter.lib.adapter.EfficientAdapter;
 import com.skocken.efficientadapter.lib.adapter.EfficientRecyclerAdapter;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,14 @@ public class SimpleListActivity extends Activity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View headerView = layoutInflater.inflate(R.layout.item_header, null);
+
         EfficientRecyclerAdapter<Plane> adapter =
                 new EfficientRecyclerAdapter<>(R.layout.item_plane, PlaneViewHolder.class,
                         generateListOfPlane());
-
         recyclerView.setAdapter(adapter);
-
+        adapter.addHeaderView(headerView);
         adapter.setOnItemClickListener(
                 new EfficientAdapter.OnItemClickListener<Plane>() {
                     @Override
