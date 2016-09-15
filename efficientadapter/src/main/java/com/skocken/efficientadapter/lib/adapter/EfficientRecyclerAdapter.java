@@ -112,6 +112,9 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
 
     @Override
     public void add(T object) {
+        if (object == null) {
+            return;
+        }
         int positionOfInsert = mBaseAdapter.add(object);
         if (mNotifyOnChange) {
             notifyItemInserted(positionOfInsert);
@@ -120,6 +123,9 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
 
     @Override
     public void add(int position, T object) {
+        if (object == null) {
+            return;
+	}
         mBaseAdapter.add(position, object);
         if (mNotifyOnChange) {
             notifyItemInserted(position);
