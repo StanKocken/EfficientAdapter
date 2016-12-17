@@ -149,6 +149,11 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     }
 
     @Override
+    public void updateWith(List<T> list) {
+        mBaseAdapter.updateWith(this, list);
+    }
+
+    @Override
     public void clear() {
         int nbObjectRemoved = mBaseAdapter.clear();
         if (mNotifyOnChange) {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.skocken.efficientadapter.lib.util.AdapterUpdater;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import java.lang.reflect.Constructor;
@@ -234,6 +235,19 @@ class AdapterHelper<T> {
      */
     void move(int from, int to) {
         mObjects.add(to, mObjects.remove(from));
+    }
+
+    /**
+     * Update the adapter list with this new list.
+     * Using this method, instead of clear/addAll will allow the implementation to compute the best way to update the
+     * elements.
+     * For example, if you have only one item which was in the previous list and which is not on the new, the
+     * Updater has an opportunity to just call `remove` on this item.
+     * @param efficientAdapter the adapter to update.
+     * @param list the new list of item to be into this adapter.
+     */
+    void updateWith(EfficientAdapter<T> efficientAdapter, List<T> list) {
+        new AdapterUpdater<>(efficientAdapter).update(list);
     }
 
     /**

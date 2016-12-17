@@ -1,5 +1,6 @@
 package com.skocken.efficientadapter.lib.adapter;
 
+import com.skocken.efficientadapter.lib.util.AdapterUpdater;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.support.annotation.LayoutRes;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.Collection;
 import java.util.List;
 
-public interface EfficientAdapter<T> {
+public interface EfficientAdapter<T> extends AdapterUpdater.Updater<T> {
 
     /**
      * Register a callback to be invoked when an item in this adapter has been clicked.
@@ -117,6 +118,16 @@ public interface EfficientAdapter<T> {
      * Move the object at the index {@code from} to the index {@code to}
      */
     void move(int from, int to);
+
+    /**
+     * Update the adapter list with this new list.
+     * Using this method, instead of clear/addAll will allow the implementation to compute the best way to update the
+     * elements.
+     * For example, if you have only one item which was in the previous list and which is not on the new, the
+     * Updater has an opportunity to just call `remove` on this item.
+     * @param list the new list of item to be into this adapter.
+     */
+    void updateWith(List<T> list);
 
     /**
      * Removes all elements from this {@code Adapter}, leaving it empty.

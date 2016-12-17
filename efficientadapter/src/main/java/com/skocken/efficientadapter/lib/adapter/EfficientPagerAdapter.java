@@ -132,6 +132,11 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     }
 
     @Override
+    public void updateWith(List<T> list) {
+        mBaseAdapter.updateWith(this, list);
+    }
+
+    @Override
     public void clear() {
         mBaseAdapter.clear();
         notifyDataSetChanged();
@@ -150,6 +155,11 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     @Override
     public List<T> getObjects() {
         return mBaseAdapter.getObjects();
+    }
+
+    @Override
+    public void notifyItemChanged(int i) {
+        notifyDataSetChanged();
     }
 
     @Override
