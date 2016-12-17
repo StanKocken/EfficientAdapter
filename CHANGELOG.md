@@ -2,6 +2,12 @@ Change Log
 ===============================================================================
 
 
+Version 2.2.1 *(2016-12-17)*
+----------------------------
+
+ * Added AdapterUpdater to do lazy updating of an EfficientAdapter
+ * Update dependencies versions
+
 Version 2.1.0 *(2016-04-30)*
 ----------------------------
 
