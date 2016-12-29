@@ -27,6 +27,8 @@ class AdapterHelper<T> {
 
     private EfficientAdapter.OnItemLongClickListener<T> mOnItemLongClickListener;
 
+    private View mHeaderView;
+
     /**
      * Constructor
      *
@@ -165,7 +167,7 @@ class AdapterHelper<T> {
      * @param collection The Collection to add at the end of the array.
      */
     int addAll(Collection<? extends T> collection) {
-        int positionOfInsert = mObjects.size();
+        int positionOfInsert = insertPosition();
         mObjects.addAll(collection);
         return positionOfInsert;
     }
@@ -176,7 +178,7 @@ class AdapterHelper<T> {
      * @param items The items to add at the end of the array.
      */
     int addAll(T... items) {
-        int positionOfInsert = mObjects.size();
+        int positionOfInsert = insertPosition();
         Collections.addAll(mObjects, items);
         return positionOfInsert;
     }
@@ -187,9 +189,17 @@ class AdapterHelper<T> {
      * @param object The object to add at the end of the array.
      */
     int add(T object) {
-        int positionOfInsert = mObjects.size();
+        int positionOfInsert = insertPosition();
         mObjects.add(object);
         return positionOfInsert;
+    }
+
+    /**
+     * Return the end of the array.
+     * @return the end of the array.
+     */
+    int insertPosition() {
+        return mHeaderView != null ? mObjects.size() + 1 : mObjects.size();
     }
 
     /**
@@ -288,6 +298,14 @@ class AdapterHelper<T> {
 
     T get(int position) {
         return mObjects.get(position);
+    }
+
+    void addHeaderView(View headerView) {
+        this.mHeaderView = headerView;
+    }
+
+    View getHeaderView() {
+        return this.mHeaderView;
     }
 
     View inflateView(ViewGroup parent, int layoutResId) {
