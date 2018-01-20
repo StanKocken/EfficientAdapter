@@ -5,6 +5,7 @@ import com.skocken.efficientadapter.example.models.Plane;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 public class PlaneViewHolder extends EfficientViewHolder<Plane> {
@@ -14,9 +15,9 @@ public class PlaneViewHolder extends EfficientViewHolder<Plane> {
     }
 
     @Override
-    protected void updateView(Context context, Plane object) {
-        setText(R.id.manufacturer_textview, object.getManufacturer());
-        setText(R.id.model_textview, object.getModel());
+    protected void updateView(@NonNull Context context, Plane item) {
+        setText(R.id.manufacturer_textview, item.getManufacturer());
+        setText(R.id.model_textview, item.getModel());
     }
 
     @Override

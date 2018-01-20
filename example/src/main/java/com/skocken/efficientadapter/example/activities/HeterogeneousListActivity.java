@@ -14,6 +14,7 @@ import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -261,8 +262,8 @@ public class HeterogeneousListActivity extends Activity {
             }
 
             @Override
-            protected void updateView(Context context, Music object) {
-                setText(R.id.title_textview, object.getArtist());
+            protected void updateView(@NonNull Context context, Music item) {
+                setText(R.id.title_textview, item.getArtist());
             }
         }
     }

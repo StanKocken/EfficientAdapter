@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
 
     private int mLastBindPosition = -1;
 
+    @Nullable
     private T mObject;
 
     /**
@@ -51,6 +53,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
         }
     }
 
+    @Nullable
     public EfficientAdapter<T> getAdapter() {
         return mAdapterRef == null ? null : mAdapterRef.get();
     }
@@ -58,10 +61,10 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
     /**
      * Method called when we need to update the view hold by this class.
      *
-     * @param object the object subject of this update
+     * @param item the object subject of this update
      */
-    public void onBindView(T object, int position) {
-        mObject = object;
+    public void onBindView(@Nullable T item, int position) {
+        mObject = item;
         mLastBindPosition = position;
         updateView(mCacheView.getView().getContext(), mObject);
     }
@@ -70,13 +73,14 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
      * Method called when we need to update the view hold by this class.
      *
      * @param context context of the root view
-     * @param object  the object subject of this update
+     * @param item  the object subject of this update
      */
-    protected abstract void updateView(Context context, T object);
+    protected abstract void updateView(@NonNull Context context, @Nullable T item);
 
     /**
      * Get the last object set to this viewholder
      */
+    @Nullable
     public T getObject() {
         return mObject;
     }
@@ -96,8 +100,9 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
     /**
      * Get the root view for the ViewHolder (the one passed into the constructor)
      *
-     * @return The ViewHolder's root view, or null if it has no layout.
+     * @return The ViewHolder's root view.
      */
+    @NonNull
     public View getView() {
         return mCacheView.getView();
     }
@@ -108,6 +113,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
      *
      * @return The view's Context.
      */
+    @NonNull
     public Context getContext() {
         return mCacheView.getView().getContext();
     }
@@ -117,6 +123,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
      *
      * @return Resources object.
      */
+    @NonNull
     public Resources getResources() {
         return mCacheView.getView().getResources();
     }
@@ -214,6 +221,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
     /**
      * Helper for {@link EfficientCacheView#findViewByIdEfficient(int)}
      */
+    @Nullable
     public <T extends View> T findViewByIdEfficient(int id) {
         return mCacheView.findViewByIdEfficient(id);
     }
@@ -221,6 +229,7 @@ public abstract class EfficientViewHolder<T> extends RecyclerView.ViewHolder {
     /**
      * Helper for {@link EfficientCacheView#findViewByIdEfficient(int, int)}
      */
+    @Nullable
     public <T extends View> T findViewByIdEfficient(int parentId, int id) {
         return mCacheView.findViewByIdEfficient(parentId, id);
     }

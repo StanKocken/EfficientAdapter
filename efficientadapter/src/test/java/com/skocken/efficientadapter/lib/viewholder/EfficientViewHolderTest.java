@@ -83,7 +83,7 @@ public class EfficientViewHolderTest extends TestCase {
             }
 
             @Override
-            protected void updateView(Context context, Object object) {
+            protected void updateView(@NonNull Context context, Object item) {
             }
         };
 
@@ -147,7 +147,7 @@ public class EfficientViewHolderTest extends TestCase {
             }
 
             @Override
-            protected void updateView(Context context, Object object) {
+            protected void updateView(@NonNull Context context, Object item) {
             }
         };
         int expectedViewId = 234;
@@ -179,7 +179,7 @@ public class EfficientViewHolderTest extends TestCase {
         }
 
         @Override
-        protected void updateView(Context context, Object object) {
+        protected void updateView(@NonNull Context context, Object item) {
             mNbCallUpdateView++;
         }
 
