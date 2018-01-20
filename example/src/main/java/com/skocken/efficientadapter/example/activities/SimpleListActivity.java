@@ -39,10 +39,10 @@ public class SimpleListActivity extends Activity {
         adapter.setOnItemClickListener(
                 new EfficientAdapter.OnItemClickListener<Plane>() {
                     @Override
-                    public void onItemClick(EfficientAdapter<Plane> parent, View view, Plane object,
+                    public void onItemClick(EfficientAdapter<Plane> parent, View view, Plane item,
                             int position) {
                         Toast.makeText(view.getContext(),
-                                "Click on: " + object.toString(),
+                                "Click on: " + item.toString(),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -51,9 +51,9 @@ public class SimpleListActivity extends Activity {
                 new EfficientAdapter.OnItemLongClickListener<Plane>() {
                     @Override
                     public void onLongItemClick(EfficientAdapter<Plane> adapter, View view,
-                            Plane object, int position) {
+                                                Plane item, int position) {
                         Toast.makeText(view.getContext(),
-                                "Longclick on: " + object.toString(),
+                                "Longclick on: " + item.toString(),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

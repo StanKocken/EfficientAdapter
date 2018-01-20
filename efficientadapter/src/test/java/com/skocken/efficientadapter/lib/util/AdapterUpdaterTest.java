@@ -149,13 +149,13 @@ public class AdapterUpdaterTest {
         }
 
         @Override
-        public int indexOf(String object) {
-            return mObjects.indexOf(object);
+        public int indexOf(String item) {
+            return mObjects.indexOf(item);
         }
 
         @Override
-        public void add(int i, String object) {
-            mObjects.add(i, object);
+        public void add(int i, String item) {
+            mObjects.add(i, item);
         }
     }
 

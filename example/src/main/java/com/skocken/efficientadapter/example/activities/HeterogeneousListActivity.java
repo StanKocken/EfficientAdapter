@@ -43,10 +43,10 @@ public class HeterogeneousListActivity extends Activity {
 
         adapter.setOnItemClickListener(new EfficientAdapter.OnItemClickListener<Item>() {
             @Override
-            public void onItemClick(EfficientAdapter<Item> parent, View view, Item object,
+            public void onItemClick(EfficientAdapter<Item> parent, View view, Item item,
                     int position) {
                 Toast.makeText(view.getContext(),
-                        "Click on: " + object.toString(),
+                        "Click on: " + item.toString(),
                         Toast.LENGTH_SHORT).show();
             }
         });

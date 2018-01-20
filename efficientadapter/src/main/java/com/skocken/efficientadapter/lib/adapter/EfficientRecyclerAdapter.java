@@ -85,13 +85,13 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     }
 
     @Override
-    public boolean hasItem(T object) {
-        return mBaseAdapter.hasItem(object);
+    public boolean hasItem(T item) {
+        return mBaseAdapter.hasItem(item);
     }
 
     @Override
-    public int indexOf(T object) {
-        return mBaseAdapter.indexOf(object);
+    public int indexOf(T item) {
+        return mBaseAdapter.indexOf(item);
     }
 
     @Override
@@ -119,8 +119,8 @@ public class EfficientRecyclerAdapter<T> extends RecyclerView.Adapter<EfficientV
     }
 
     @Override
-    public void add(int position, T object) {
-        mBaseAdapter.add(position, object);
+    public void add(int position, T item) {
+        mBaseAdapter.add(position, item);
         if (mNotifyOnChange) {
             notifyItemInserted(position);
         }

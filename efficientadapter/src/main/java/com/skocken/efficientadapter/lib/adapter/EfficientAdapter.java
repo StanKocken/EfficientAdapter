@@ -4,6 +4,8 @@ import com.skocken.efficientadapter.lib.util.AdapterUpdater;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,11 +57,11 @@ public interface EfficientAdapter<T> extends AdapterUpdater.Updater<T> {
      * Searches this {@code Adapter} for the specified object and returns the index of the
      * first occurrence.
      *
-     * @param object the object to search for.
+     * @param item the object to search for.
      * @return the index of the first occurrence of the object or -1 if the
      * object was not found.
      */
-    int indexOf(T object);
+    int indexOf(T item);
 
     /**
      * Adds the objects in the specified collection to the end of this {@code Adapter}. The
@@ -94,10 +96,10 @@ public interface EfficientAdapter<T> extends AdapterUpdater.Updater<T> {
      * {@code Adapter}, the object is added at the end.
      *
      * @param index  the index at which to insert the object.
-     * @param object the object to add.
+     * @param item the object to add.
      * @throws IndexOutOfBoundsException when {@code location < 0 || location > size()}
      */
-    void add(int index, T object);
+    void add(int index, T item);
 
     /**
      * Removes the object at the specified location from this {@code Adapter}.
@@ -283,10 +285,10 @@ public interface EfficientAdapter<T> extends AdapterUpdater.Updater<T> {
          * @param adapter  The EfficientAdapter where the click happened.
          * @param view     The view within the EfficientAdapter that was clicked (this
          *                 will be a view provided by the adapter)
-         * @param object   The object associate with this {@link EfficientViewHolder}
+         * @param item   The object associate with this {@link EfficientViewHolder}
          * @param position The position of the view in the adapter.
          */
-        void onItemClick(EfficientAdapter<T> adapter, View view, T object, int position);
+        void onItemClick(@NonNull EfficientAdapter<T> adapter, @NonNull View view, @Nullable T item, int position);
     }
 
     /**
@@ -302,9 +304,9 @@ public interface EfficientAdapter<T> extends AdapterUpdater.Updater<T> {
          * @param adapter  The EfficientAdapter where the click happened.
          * @param view     The view within the EfficientAdapter that was clicked (this
          *                 will be a view provided by the adapter)
-         * @param object   The object associate with this {@link EfficientViewHolder}
+         * @param item   The object associate with this {@link EfficientViewHolder}
          * @param position The position of the view in the adapter.
          */
-        void onLongItemClick(EfficientAdapter<T> adapter, View view, T object, int position);
+        void onLongItemClick(@NonNull EfficientAdapter<T> adapter, @NonNull View view, @Nullable T item, int position);
     }
 }

@@ -34,9 +34,9 @@ public class ViewPagerActivity extends Activity {
                 new EfficientAdapter.OnItemLongClickListener<Book>() {
                     @Override
                     public void onLongItemClick(EfficientAdapter<Book> adapter, View view,
-                            Book object, int position) {
+                                                Book item, int position) {
                         Toast.makeText(view.getContext(),
-                                "Longclick on: " + object.toString(),
+                                "Longclick on: " + item.toString(),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

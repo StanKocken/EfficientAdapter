@@ -85,8 +85,8 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     }
 
     @Override
-    public int indexOf(T object) {
-        return mBaseAdapter.indexOf(object);
+    public int indexOf(T item) {
+        return mBaseAdapter.indexOf(item);
     }
 
     @Override
@@ -108,8 +108,8 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     }
 
     @Override
-    public void add(int position, T object) {
-        mBaseAdapter.add(position, object);
+    public void add(int position, T item) {
+        mBaseAdapter.add(position, item);
         notifyDataSetChanged();
     }
 

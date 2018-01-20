@@ -90,8 +90,8 @@ public class AdapterUpdater<T> {
 
         void removeAt(int i);
 
-        int indexOf(T object);
+        int indexOf(T item);
 
-        void add(int i, T object);
+        void add(int i, T item);
     }
 }
