@@ -1,6 +1,11 @@
 Change Log
 ===============================================================================
 
+Version 2.2.2 *(2018-01-20)*
+----------------------------
+
+ * Improve compatibility with Kotlin (Null annotations, reserved keywords…)
+ * Update dependencies versions
 
 Version 2.2.1 *(2016-12-17)*
 ----------------------------
