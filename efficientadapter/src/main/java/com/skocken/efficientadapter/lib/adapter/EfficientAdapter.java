@@ -238,7 +238,7 @@ public interface EfficientAdapter<T> extends AdapterUpdater.Updater<T> {
      * @param viewType The view type of the new View.
      * @return a new {@link EfficientViewHolder}
      */
-    EfficientViewHolder<T> generateViewHolder(View v, int viewType);
+    EfficientViewHolder<? extends T> generateViewHolder(View v, int viewType);
 
     /**
      * Called by {@link #onCreateViewHolder(ViewGroup, int)} when the adapter need to generate a

@@ -194,7 +194,7 @@ public class EfficientPagerAdapter<T> extends PagerAdapter implements EfficientA
     }
 
     @Override
-    public EfficientViewHolder<T> generateViewHolder(View v, int viewType) {
+    public EfficientViewHolder<? extends T> generateViewHolder(View v, int viewType) {
         Class<? extends EfficientViewHolder<? extends T>> viewHolderClass = getViewHolderClass(viewType);
         if (viewHolderClass == null) {
             mBaseAdapter.throwMissingViewHolder(viewType);

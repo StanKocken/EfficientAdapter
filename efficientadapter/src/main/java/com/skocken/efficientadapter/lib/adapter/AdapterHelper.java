@@ -328,7 +328,7 @@ class AdapterHelper<T> {
         }
     }
 
-    EfficientViewHolder<T> generateViewHolder(View v,
+    EfficientViewHolder<? extends T> generateViewHolder(View v,
                                            Class<? extends EfficientViewHolder<? extends T>> viewHolderClass,
                                            EfficientAdapter<T> adapter) {
         Constructor<?>[] constructors = viewHolderClass.getDeclaredConstructors();
