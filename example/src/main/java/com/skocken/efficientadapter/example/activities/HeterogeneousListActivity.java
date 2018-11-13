@@ -255,7 +255,7 @@ public class HeterogeneousListActivity extends Activity {
             }
         }
 
-        private class MusicViewHolder extends EfficientViewHolder<Music> {
+        public class MusicViewHolder extends EfficientViewHolder<Music> {
 
             public MusicViewHolder(View itemView) {
                 super(itemView);
