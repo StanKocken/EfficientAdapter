@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion MIN_SDK_VERSION
@@ -21,13 +20,13 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:' + ANDROID_SUPPORT_VERSION
-    compile 'com.android.support:recyclerview-v7:' + ANDROID_SUPPORT_VERSION
+    compile "com.android.support:support-annotations:$ANDROID_SUPPORT_VERSION"
+    compile "com.android.support:recyclerview-v7:$ANDROID_SUPPORT_VERSION"
 
     // JUnit test dependencies
-    testCompile 'junit:junit:' + JUNIT_VERSION
-    testCompile 'org.mockito:mockito-core:' + MOCKITO_VERSION
-    testCompile "org.robolectric:robolectric:" + ROBOLECTRIC_VERSION
+    testCompile "junit:junit:$JUNIT_VERSION"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
 }
 
 apply from: '../gradle_script/installv1.gradle'
