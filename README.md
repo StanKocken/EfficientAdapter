@@ -101,7 +101,7 @@ If you want to add it manually:
 ## Gradle
 
     dependencies {
-        compile 'com.skocken:efficientadapter:2.3.1'
+        compile 'com.skocken:efficientadapter:2.4.0'
     }
 
 ## Android Support library

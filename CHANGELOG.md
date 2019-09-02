@@ -1,6 +1,12 @@
 Change Log
 ===============================================================================
 
+Version 2.4.0 *(2019-09-02)*
+----------------------------
+
+ * Migrate to AndroidX. Note: if you want to still use the deprecated Android Support library, stay with 2.3.X, any critical issues will be fixed there.
+ * Update dependencies versions
+
 Version 2.3.1 *(2018-11-13)*
 ----------------------------
 
