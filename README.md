@@ -1,10 +1,10 @@
 # Efficient Adapter for Android
 
-Create a new adapter for a [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html) or [ViewPager](https://developer.android.com/reference/android/support/v4/view/ViewPager.html) is now much easier.
+Create a new adapter for a [RecyclerView](https://developer.android.com/jetpack/androidx/releases/recyclerview) or [ViewPager](https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager) is now much easier.
 
 ## Overview
 
-Create a list of elements into a [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html) or [ViewPager](https://developer.android.com/reference/android/support/v4/view/ViewPager.html) is not that easy for a beginner, and repetitive for others. The goal of this library is to simplify that for you.
+Create a list of elements into a [RecyclerView](https://developer.android.com/jetpack/androidx/releases/recyclerview) or [ViewPager](https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager) is not that easy for a beginner, and repetitive for others. The goal of this library is to simplify that for you.
 
 ## How does it work?
 
@@ -22,14 +22,14 @@ Create a class ViewHolder (`BookViewHolder` for example). The method `updateView
         }
     }
 
-Give this ViewHolder class to the constructor of the adapter (SimpleAdapter) of your [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html), with the resource id of your item view and the list of objects:
+Give this ViewHolder class to the constructor of the adapter (SimpleAdapter) of your [RecyclerView](https://developer.android.com/jetpack/androidx/releases/recyclerview), with the resource id of your item view and the list of objects:
 
     EfficientRecyclerAdapter<Plane> adapter = new EfficientRecyclerAdapter<Plane>(R.layout.item_book, BookViewHolder.class, listOfBooks);
     recyclerView.setAdapter(adapter);
 
 And that's it!
 
-It's also working with a [ViewPager](https://developer.android.com/reference/android/support/v4/view/ViewPager.html):
+It's also working with a [ViewPager](https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager):
 
     EfficientPagerAdapter<Plane> adapter = new EfficientPagerAdapter<Plane>(R.layout.item_book, BookViewHolder.class, listOfBooks);
     viewPager.setAdapter(adapter);
@@ -104,6 +104,9 @@ If you want to add it manually:
         compile 'com.skocken:efficientadapter:2.3.1'
     }
 
+## Android Support library
+
+If you are still using the deprecated Android Support Library (instead of AndroidX), please use the dependency 2.3.X instead.
 
 ## License
 

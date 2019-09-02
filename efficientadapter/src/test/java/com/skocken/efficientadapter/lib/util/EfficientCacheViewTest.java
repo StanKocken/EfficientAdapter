@@ -1,5 +1,8 @@
 package com.skocken.efficientadapter.lib.util;
 
+import android.os.Build;
+import android.view.View;
+
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -10,8 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import android.view.View;
-
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(sdk = Build.VERSION_CODES.O_MR1)
 public class EfficientCacheViewTest extends TestCase {
 
     private static final int ID_ROOT_VIEW = 1;

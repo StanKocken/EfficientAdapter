@@ -14,9 +14,9 @@ import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,8 +43,8 @@ public class HeterogeneousListActivity extends Activity {
 
         adapter.setOnItemClickListener(new EfficientAdapter.OnItemClickListener<Item>() {
             @Override
-            public void onItemClick(EfficientAdapter<Item> parent, View view, Item item,
-                    int position) {
+            public void onItemClick(@NonNull EfficientAdapter<Item> parent, @NonNull View view,
+                                    Item item, int position) {
                 Toast.makeText(view.getContext(),
                         "Click on: " + item.toString(),
                         Toast.LENGTH_SHORT).show();
@@ -209,7 +209,7 @@ public class HeterogeneousListActivity extends Activity {
 
         private static final int VIEW_TYPE_MUSIC = 2;
 
-        public PlaneBookAdapter(List<Item> objects) {
+        PlaneBookAdapter(List<Item> objects) {
             super(objects);
         }
 

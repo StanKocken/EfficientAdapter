@@ -5,7 +5,7 @@ import com.skocken.efficientadapter.example.models.Plane;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 public class PlaneViewHolder extends EfficientViewHolder<Plane> {

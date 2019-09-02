@@ -1,5 +1,14 @@
 package com.skocken.efficientadapter.lib.viewholder;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+
 import com.skocken.efficientadapter.lib.util.EfficientCacheView;
 
 import junit.framework.TestCase;
@@ -10,18 +19,11 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.view.View;
-
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(sdk = Build.VERSION_CODES.O_MR1)
 public class EfficientViewHolderTest extends TestCase {
 
     @Test

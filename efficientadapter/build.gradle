@@ -17,16 +17,21 @@ android {
             minifyEnabled false
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
-    compile "com.android.support:support-annotations:$ANDROID_SUPPORT_VERSION"
-    compile "com.android.support:recyclerview-v7:$ANDROID_SUPPORT_VERSION"
+    implementation 'androidx.annotation:annotation:1.1.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
 
     // JUnit test dependencies
-    testCompile "junit:junit:$JUNIT_VERSION"
-    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
+    testImplementation "junit:junit:$JUNIT_VERSION"
+    testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
 }
 
 apply from: '../gradle_script/installv1.gradle'

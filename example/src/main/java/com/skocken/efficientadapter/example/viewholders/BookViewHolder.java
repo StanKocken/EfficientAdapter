@@ -1,12 +1,13 @@
 package com.skocken.efficientadapter.example.viewholders;
 
+import android.content.Context;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+
 import com.skocken.efficientadapter.example.R;
 import com.skocken.efficientadapter.example.models.Book;
 import com.skocken.efficientadapter.lib.viewholder.EfficientViewHolder;
-
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.view.View;
 
 public class BookViewHolder extends EfficientViewHolder<Book> {
 
