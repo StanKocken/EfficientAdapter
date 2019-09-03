@@ -34,5 +34,11 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
 }
 
+afterEvaluate {
+    javadoc.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompile.classpath.files
+    })
+}
+
 apply from: '../gradle_script/installv1.gradle'
 apply from: '../gradle_script/bintrayv1.gradle'
